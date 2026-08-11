@@ -10,33 +10,195 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as CaracteristicasRouteImport } from './routes/caracteristicas'
+import { Route as DemostracionRouteImport } from './routes/demostracion'
+import { Route as PlanesRouteImport } from './routes/planes'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAgendaRouteImport } from './routes/app.agenda'
+import { Route as AppAnaliticaRouteImport } from './routes/app.analitica'
+import { Route as AppClinicaRouteImport } from './routes/app.clinica'
+import { Route as AppComunicacionRouteImport } from './routes/app.comunicacion'
+import { Route as AppConfiguracionRouteImport } from './routes/app.configuracion'
+import { Route as AppFacturacionRouteImport } from './routes/app.facturacion'
+import { Route as AppMarketingRouteImport } from './routes/app.marketing'
+import { Route as AppPacientesRouteImport } from './routes/app.pacientes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaracteristicasRoute = CaracteristicasRouteImport.update({
+  id: '/caracteristicas',
+  path: '/caracteristicas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemostracionRoute = DemostracionRouteImport.update({
+  id: '/demostracion',
+  path: '/demostracion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanesRoute = PlanesRouteImport.update({
+  id: '/planes',
+  path: '/planes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAgendaRoute = AppAgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnaliticaRoute = AppAnaliticaRouteImport.update({
+  id: '/analitica',
+  path: '/analitica',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppClinicaRoute = AppClinicaRouteImport.update({
+  id: '/clinica',
+  path: '/clinica',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppComunicacionRoute = AppComunicacionRouteImport.update({
+  id: '/comunicacion',
+  path: '/comunicacion',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppConfiguracionRoute = AppConfiguracionRouteImport.update({
+  id: '/configuracion',
+  path: '/configuracion',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFacturacionRoute = AppFacturacionRouteImport.update({
+  id: '/facturacion',
+  path: '/facturacion',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMarketingRoute = AppMarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPacientesRoute = AppPacientesRouteImport.update({
+  id: '/pacientes',
+  path: '/pacientes',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/caracteristicas': typeof CaracteristicasRoute
+  '/demostracion': typeof DemostracionRoute
+  '/planes': typeof PlanesRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/analitica': typeof AppAnaliticaRoute
+  '/app/clinica': typeof AppClinicaRoute
+  '/app/comunicacion': typeof AppComunicacionRoute
+  '/app/configuracion': typeof AppConfiguracionRoute
+  '/app/facturacion': typeof AppFacturacionRoute
+  '/app/marketing': typeof AppMarketingRoute
+  '/app/pacientes': typeof AppPacientesRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/caracteristicas': typeof CaracteristicasRoute
+  '/demostracion': typeof DemostracionRoute
+  '/planes': typeof PlanesRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/analitica': typeof AppAnaliticaRoute
+  '/app/clinica': typeof AppClinicaRoute
+  '/app/comunicacion': typeof AppComunicacionRoute
+  '/app/configuracion': typeof AppConfiguracionRoute
+  '/app/facturacion': typeof AppFacturacionRoute
+  '/app/marketing': typeof AppMarketingRoute
+  '/app/pacientes': typeof AppPacientesRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/caracteristicas': typeof CaracteristicasRoute
+  '/demostracion': typeof DemostracionRoute
+  '/planes': typeof PlanesRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/analitica': typeof AppAnaliticaRoute
+  '/app/clinica': typeof AppClinicaRoute
+  '/app/comunicacion': typeof AppComunicacionRoute
+  '/app/configuracion': typeof AppConfiguracionRoute
+  '/app/facturacion': typeof AppFacturacionRoute
+  '/app/marketing': typeof AppMarketingRoute
+  '/app/pacientes': typeof AppPacientesRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/caracteristicas'
+    | '/demostracion'
+    | '/planes'
+    | '/app/agenda'
+    | '/app/analitica'
+    | '/app/clinica'
+    | '/app/comunicacion'
+    | '/app/configuracion'
+    | '/app/facturacion'
+    | '/app/marketing'
+    | '/app/pacientes'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/caracteristicas'
+    | '/demostracion'
+    | '/planes'
+    | '/app/agenda'
+    | '/app/analitica'
+    | '/app/clinica'
+    | '/app/comunicacion'
+    | '/app/configuracion'
+    | '/app/facturacion'
+    | '/app/marketing'
+    | '/app/pacientes'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/caracteristicas'
+    | '/demostracion'
+    | '/planes'
+    | '/app/agenda'
+    | '/app/analitica'
+    | '/app/clinica'
+    | '/app/comunicacion'
+    | '/app/configuracion'
+    | '/app/facturacion'
+    | '/app/marketing'
+    | '/app/pacientes'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  CaracteristicasRoute: typeof CaracteristicasRoute
+  DemostracionRoute: typeof DemostracionRoute
+  PlanesRoute: typeof PlanesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +210,132 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/caracteristicas': {
+      id: '/caracteristicas'
+      path: '/caracteristicas'
+      fullPath: '/caracteristicas'
+      preLoaderRoute: typeof CaracteristicasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demostracion': {
+      id: '/demostracion'
+      path: '/demostracion'
+      fullPath: '/demostracion'
+      preLoaderRoute: typeof DemostracionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planes': {
+      id: '/planes'
+      path: '/planes'
+      fullPath: '/planes'
+      preLoaderRoute: typeof PlanesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/agenda': {
+      id: '/app/agenda'
+      path: '/agenda'
+      fullPath: '/app/agenda'
+      preLoaderRoute: typeof AppAgendaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/analitica': {
+      id: '/app/analitica'
+      path: '/analitica'
+      fullPath: '/app/analitica'
+      preLoaderRoute: typeof AppAnaliticaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/clinica': {
+      id: '/app/clinica'
+      path: '/clinica'
+      fullPath: '/app/clinica'
+      preLoaderRoute: typeof AppClinicaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/comunicacion': {
+      id: '/app/comunicacion'
+      path: '/comunicacion'
+      fullPath: '/app/comunicacion'
+      preLoaderRoute: typeof AppComunicacionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/configuracion': {
+      id: '/app/configuracion'
+      path: '/configuracion'
+      fullPath: '/app/configuracion'
+      preLoaderRoute: typeof AppConfiguracionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/facturacion': {
+      id: '/app/facturacion'
+      path: '/facturacion'
+      fullPath: '/app/facturacion'
+      preLoaderRoute: typeof AppFacturacionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/marketing': {
+      id: '/app/marketing'
+      path: '/marketing'
+      fullPath: '/app/marketing'
+      preLoaderRoute: typeof AppMarketingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/pacientes': {
+      id: '/app/pacientes'
+      path: '/pacientes'
+      fullPath: '/app/pacientes'
+      preLoaderRoute: typeof AppPacientesRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAgendaRoute: typeof AppAgendaRoute
+  AppAnaliticaRoute: typeof AppAnaliticaRoute
+  AppClinicaRoute: typeof AppClinicaRoute
+  AppComunicacionRoute: typeof AppComunicacionRoute
+  AppConfiguracionRoute: typeof AppConfiguracionRoute
+  AppFacturacionRoute: typeof AppFacturacionRoute
+  AppMarketingRoute: typeof AppMarketingRoute
+  AppPacientesRoute: typeof AppPacientesRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAgendaRoute: AppAgendaRoute,
+  AppAnaliticaRoute: AppAnaliticaRoute,
+  AppClinicaRoute: AppClinicaRoute,
+  AppComunicacionRoute: AppComunicacionRoute,
+  AppConfiguracionRoute: AppConfiguracionRoute,
+  AppFacturacionRoute: AppFacturacionRoute,
+  AppMarketingRoute: AppMarketingRoute,
+  AppPacientesRoute: AppPacientesRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  CaracteristicasRoute: CaracteristicasRoute,
+  DemostracionRoute: DemostracionRoute,
+  PlanesRoute: PlanesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
