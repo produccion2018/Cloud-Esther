@@ -25,17 +25,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { faqs, testimonials, modules } from "@/data/demo";
+import toothLogo from "@/assets/tooth-logo.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DentalisPro | Software de gestión para clínicas odontológicas" },
+      { title: "Cloud Esther | Software de gestión para clínicas odontológicas" },
       {
         name: "description",
         content:
           "Plataforma modular y multisucursal para clínicas odontológicas: agenda, historia clínica, comunicación, marketing, facturación y analítica en un solo panel.",
       },
-      { property: "og:title", content: "DentalisPro | Gestiona toda tu clínica odontológica" },
+      { property: "og:title", content: "Cloud Esther | Gestiona toda tu clínica odontológica" },
       {
         property: "og:description",
         content:
@@ -72,37 +73,55 @@ const benefits = [
 function Landing() {
   return (
     <PublicLayout>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-soft-gradient">
-        <div className="pointer-events-none absolute -right-32 -top-32 size-[28rem] rounded-full bg-accent/50 blur-3xl" />
-        <div className="pointer-events-none absolute -left-40 top-40 size-[24rem] rounded-full bg-success-soft/70 blur-3xl" />
-        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
-          <Badge variant="secondary" className="mb-5 gap-1.5 px-3 py-1.5">
+      {/* Hero — degradé violeta de marca (Cloud Esther), sin foto de fondo,
+          texto claro */}
+      <section className="relative overflow-hidden text-primary-foreground">
+        <div className="absolute inset-0 bg-hero-gradient" />
+
+        {/* Diente grande decorativo, en el espacio vacío a la derecha
+            (solo pantallas grandes — en mobile no hay lugar para él).
+            Wrapper con 2 "patitas" propias debajo, para que la caminata
+            se sienta más como un personaje y no solo un objeto deslizándose. */}
+        <div
+          className="pointer-events-none absolute -right-10 top-[24%] hidden w-80 opacity-90 drop-shadow-2xl animate-tooth-entrance lg:block xl:w-[26rem]"
+        >
+          <img src={toothLogo} alt="" className="relative z-10 w-full" />
+          <span className="tooth-foot tooth-foot-left" />
+          <span className="tooth-foot tooth-foot-right" />
+        </div>
+
+        <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-4 sm:px-6 lg:pb-28 lg:pt-6">
+          <Badge className="mb-5 gap-1.5 border-primary-foreground/25 bg-primary-foreground/15 px-3 py-1.5 text-primary-foreground hover:bg-primary-foreground/15">
             <Sparkles className="size-3.5" /> Implementación guiada + membresía mensual
           </Badge>
           <h1 className="max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl lg:text-6xl">
             Gestiona toda tu clínica odontológica desde un solo lugar
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
+          <p className="mt-6 max-w-2xl text-lg text-primary-foreground/85">
             Una plataforma modular y escalable para clínicas pequeñas, medianas, grandes y grupos
             odontológicos. Activa únicamente los módulos que necesitas y amplía tu plan cuando
             crezcas, sin límite de sucursales, odontólogos, empleados ni pacientes.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="gap-2">
+            <Button asChild size="lg" variant="secondary" className="gap-2">
               <Link to="/demostracion">
                 Solicitar demostración <ArrowRight className="size-4" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10"
+            >
               <Link to="/planes">Ver planes</Link>
             </Button>
           </div>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-primary-foreground/85">
             {["Sin permanencia", "Migración de historiales incluida", "Formación del equipo", "Datos cifrados"].map(
               (i) => (
                 <span key={i} className="inline-flex items-center gap-1.5">
-                  <CheckCircle2 className="size-4 text-success" /> {i}
+                  <CheckCircle2 className="size-4 text-primary-foreground" /> {i}
                 </span>
               ),
             )}
@@ -136,15 +155,15 @@ function Landing() {
         <div className="max-w-2xl">
           <h2 className="text-3xl font-bold sm:text-4xl">Resultados que tu clínica puede medir</h2>
           <p className="mt-4 text-muted-foreground">
-            DentalisPro conecta la agenda, la historia clínica y la comunicación con el paciente para
-            que tu equipo dedique el tiempo a tratar, no a administrar.
+            Cloud Esther conecta la agenda, la historia clínica y la comunicación con el paciente
+            para que tu equipo dedique el tiempo a tratar, no a administrar.
           </p>
         </div>
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {benefits.map((b) => (
             <Card key={b.title} className="h-full border-border/70 shadow-soft transition-shadow hover:shadow-lift">
               <CardContent className="p-6">
-                <span className="flex size-11 items-center justify-center rounded-2xl bg-success-soft text-success">
+                <span className="flex size-11 items-center justify-center rounded-2xl bg-primary-soft text-primary">
                   <b.icon className="size-5" />
                 </span>
                 <h3 className="mt-4 text-base font-semibold">{b.title}</h3>
@@ -189,13 +208,13 @@ function Landing() {
 
       {/* Testimonios */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <h2 className="text-3xl font-bold sm:text-4xl">Clínicas que ya trabajan con DentalisPro</h2>
+        <h2 className="text-3xl font-bold sm:text-4xl">Clínicas que ya trabajan con Cloud Esther</h2>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {testimonials.map((t) => (
             <Card key={t.name} className="h-full border-border/70 shadow-soft">
               <CardContent className="flex h-full flex-col p-6">
                 <Quote className="size-6 text-primary" />
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground">“{t.quote}”</p>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground">"{t.quote}"</p>
                 <div className="mt-6 border-t border-border pt-4">
                   <p className="text-sm font-semibold">{t.name}</p>
                   <p className="text-xs text-muted-foreground">{t.role}</p>

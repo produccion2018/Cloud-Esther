@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -53,102 +55,106 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  /* Tipografía de Cloud Esther (misma que el Sidebar del proyecto original):
+     Inter para texto normal, Plus Jakarta Sans para títulos/logo. */
+  --font-sans: "Inter", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   --radius: 0.9rem;
 
-  --background: oklch(0.995 0.004 230);
-  --foreground: oklch(0.24 0.045 250);
+  --background: oklch(0.995 0.004 290);
+  --foreground: oklch(0.24 0.045 285);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.24 0.045 250);
+  --card-foreground: oklch(0.24 0.045 285);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.24 0.045 250);
+  --popover-foreground: oklch(0.24 0.045 285);
 
-  /* Azul principal */
-  --primary: oklch(0.55 0.17 255);
-  --primary-foreground: oklch(0.99 0.005 240);
-  --primary-soft: oklch(0.95 0.03 245);
+  /* Violeta principal — identidad de marca Cloud Esther */
+  --primary: oklch(0.53 0.21 292);
+  --primary-foreground: oklch(0.99 0.005 290);
+  --primary-soft: oklch(0.94 0.045 292);
 
-  /* Celeste */
-  --secondary: oklch(0.94 0.045 225);
-  --secondary-foreground: oklch(0.34 0.09 250);
+  /* Lavanda suave (antes celeste) */
+  --secondary: oklch(0.93 0.045 292);
+  --secondary-foreground: oklch(0.34 0.1 292);
 
-  --muted: oklch(0.965 0.008 240);
-  --muted-foreground: oklch(0.53 0.035 250);
+  --muted: oklch(0.965 0.008 285);
+  --muted-foreground: oklch(0.53 0.035 285);
 
-  --accent: oklch(0.9 0.075 220);
-  --accent-foreground: oklch(0.3 0.08 250);
+  --accent: oklch(0.9 0.075 292);
+  --accent-foreground: oklch(0.3 0.09 292);
 
-  /* Verde salud */
+  /* Verde salud — se mantiene, es un color funcional (éxito/confirmado), no de marca */
   --success: oklch(0.63 0.14 165);
   --success-foreground: oklch(0.99 0.005 240);
   --success-soft: oklch(0.94 0.05 165);
 
   --warning: oklch(0.79 0.15 78);
   --warning-foreground: oklch(0.28 0.06 70);
-  --info: oklch(0.7 0.12 225);
-  --info-foreground: oklch(0.24 0.05 250);
+  --info: oklch(0.7 0.12 280);
+  --info-foreground: oklch(0.24 0.05 285);
 
   --destructive: oklch(0.6 0.21 25);
   --destructive-foreground: oklch(0.99 0.005 240);
 
-  --border: oklch(0.915 0.012 240);
-  --input: oklch(0.915 0.012 240);
-  --ring: oklch(0.55 0.17 255);
+  --border: oklch(0.915 0.012 285);
+  --input: oklch(0.915 0.012 285);
+  --ring: oklch(0.53 0.21 292);
 
-  --chart-1: oklch(0.55 0.17 255);
-  --chart-2: oklch(0.7 0.12 220);
+  --chart-1: oklch(0.53 0.21 292);
+  --chart-2: oklch(0.7 0.12 280);
   --chart-3: oklch(0.63 0.14 165);
   --chart-4: oklch(0.79 0.15 78);
-  --chart-5: oklch(0.62 0.16 300);
+  --chart-5: oklch(0.62 0.18 320);
 
-  --sidebar: oklch(0.99 0.006 240);
-  --sidebar-foreground: oklch(0.3 0.04 250);
-  --sidebar-primary: oklch(0.55 0.17 255);
-  --sidebar-primary-foreground: oklch(0.99 0.005 240);
-  --sidebar-accent: oklch(0.95 0.03 245);
-  --sidebar-accent-foreground: oklch(0.34 0.09 250);
-  --sidebar-border: oklch(0.92 0.012 240);
-  --sidebar-ring: oklch(0.55 0.17 255);
+  --sidebar: oklch(0.99 0.006 290);
+  --sidebar-foreground: oklch(0.3 0.04 285);
+  --sidebar-primary: oklch(0.53 0.21 292);
+  --sidebar-primary-foreground: oklch(0.99 0.005 290);
+  --sidebar-accent: oklch(0.94 0.045 292);
+  --sidebar-accent-foreground: oklch(0.34 0.1 292);
+  --sidebar-border: oklch(0.92 0.012 285);
+  --sidebar-ring: oklch(0.53 0.21 292);
 
-  --gradient-hero: linear-gradient(135deg, oklch(0.55 0.17 255), oklch(0.68 0.13 220) 55%, oklch(0.68 0.13 172));
-  --gradient-soft: linear-gradient(180deg, oklch(0.97 0.02 235), oklch(1 0 0));
-  --shadow-soft: 0 1px 2px oklch(0.3 0.06 250 / 0.04), 0 8px 24px -12px oklch(0.3 0.06 250 / 0.18);
-  --shadow-lift: 0 24px 48px -24px oklch(0.35 0.09 250 / 0.35);
+  /* Degradé violeta tipo "Prime Dental" (referencia visual), de oscuro a más
+     claro/periwinkle — usado en el hero público y como acento de marca. */
+  --gradient-hero: linear-gradient(180deg, oklch(0.4 0.19 292), oklch(0.55 0.21 288) 45%, oklch(0.8 0.09 280) 100%);
+  --gradient-soft: linear-gradient(180deg, oklch(0.96 0.025 292), oklch(1 0 0));
+  --shadow-soft: 0 1px 2px oklch(0.3 0.09 292 / 0.05), 0 8px 24px -12px oklch(0.3 0.09 292 / 0.2);
+  --shadow-lift: 0 24px 48px -24px oklch(0.35 0.15 292 / 0.4);
 }
 
 .dark {
-  --background: oklch(0.19 0.03 255);
-  --foreground: oklch(0.97 0.006 240);
-  --card: oklch(0.235 0.033 255);
-  --card-foreground: oklch(0.97 0.006 240);
-  --popover: oklch(0.235 0.033 255);
-  --popover-foreground: oklch(0.97 0.006 240);
-  --primary: oklch(0.7 0.14 250);
-  --primary-foreground: oklch(0.18 0.04 255);
-  --primary-soft: oklch(0.3 0.06 250);
-  --secondary: oklch(0.3 0.05 250);
-  --secondary-foreground: oklch(0.96 0.008 240);
-  --muted: oklch(0.29 0.035 252);
-  --muted-foreground: oklch(0.73 0.03 245);
-  --accent: oklch(0.33 0.06 240);
-  --accent-foreground: oklch(0.96 0.008 240);
+  --background: oklch(0.19 0.035 292);
+  --foreground: oklch(0.97 0.006 290);
+  --card: oklch(0.235 0.04 292);
+  --card-foreground: oklch(0.97 0.006 290);
+  --popover: oklch(0.235 0.04 292);
+  --popover-foreground: oklch(0.97 0.006 290);
+  --primary: oklch(0.68 0.17 292);
+  --primary-foreground: oklch(0.18 0.04 292);
+  --primary-soft: oklch(0.3 0.07 292);
+  --secondary: oklch(0.3 0.06 292);
+  --secondary-foreground: oklch(0.96 0.008 290);
+  --muted: oklch(0.29 0.035 288);
+  --muted-foreground: oklch(0.73 0.03 285);
+  --accent: oklch(0.33 0.07 292);
+  --accent-foreground: oklch(0.96 0.008 290);
   --success: oklch(0.7 0.13 165);
   --success-foreground: oklch(0.18 0.04 255);
   --success-soft: oklch(0.31 0.06 165);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.7 0.14 250);
-  --sidebar: oklch(0.215 0.032 255);
-  --sidebar-foreground: oklch(0.95 0.008 240);
-  --sidebar-primary: oklch(0.7 0.14 250);
-  --sidebar-primary-foreground: oklch(0.18 0.04 255);
-  --sidebar-accent: oklch(0.3 0.05 250);
-  --sidebar-accent-foreground: oklch(0.96 0.008 240);
+  --ring: oklch(0.68 0.17 292);
+  --sidebar: oklch(0.215 0.038 292);
+  --sidebar-foreground: oklch(0.95 0.008 290);
+  --sidebar-primary: oklch(0.68 0.17 292);
+  --sidebar-primary-foreground: oklch(0.18 0.04 292);
+  --sidebar-accent: oklch(0.3 0.06 292);
+  --sidebar-accent-foreground: oklch(0.96 0.008 290);
   --sidebar-border: oklch(1 0 0 / 12%);
 }
 
@@ -187,4 +193,82 @@
 
 @utility shadow-lift {
   box-shadow: var(--shadow-lift);
+}
+
+/* Entrada caminando: el diente se desliza horizontalmente, lento y parejo. */
+@keyframes tooth-walk-in {
+  0% {
+    transform: translate(-130vw, -50%);
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -50%);
+    opacity: 1;
+  }
+}
+
+/* Balanceo suave e infinito, una vez que el diente ya llegó a su lugar */
+@keyframes tooth-idle-sway {
+  0%, 100% {
+    transform: translate(0, -50%) rotate(-5deg);
+  }
+  50% {
+    transform: translate(0, -50%) rotate(5deg);
+  }
+}
+
+/* Patitas: alineadas con las dos raíces reales del diente (no al centro),
+   forma alargada tipo "piecito" en vez de un óvalo genérico. Se mueven
+   alternadas todo el tiempo que el diente está en pantalla — dan la
+   ilusión de caminata sin depender de ningún framework externo. */
+.tooth-foot {
+  position: absolute;
+  bottom: -3%;
+  width: 9%;
+  height: 16%;
+  border-radius: 999px 999px 40% 40%;
+  background: #fff;
+  border: 3px solid #1a1a1a;
+  transform-origin: top center;
+  animation-duration: 0.65s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.tooth-foot-left {
+  left: 33%;
+  animation-name: tooth-foot-step-a;
+}
+
+.tooth-foot-right {
+  left: 58%;
+  animation-name: tooth-foot-step-b;
+}
+
+@keyframes tooth-foot-step-a {
+  0%, 100% {
+    transform: translateY(0) rotate(-16deg);
+  }
+  50% {
+    transform: translateY(-14%) rotate(16deg);
+  }
+}
+
+@keyframes tooth-foot-step-b {
+  0%, 100% {
+    transform: translateY(-14%) rotate(16deg);
+  }
+  50% {
+    transform: translateY(0) rotate(-16deg);
+  }
+}
+
+@utility animate-tooth-entrance {
+  animation:
+    tooth-walk-in 6s linear both,
+    tooth-idle-sway 2.6s ease-in-out 6s infinite;
+  transform-origin: bottom center;
 }

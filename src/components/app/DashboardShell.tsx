@@ -11,7 +11,7 @@ import {
   Receipt,
   Search,
   Settings,
-  Stethoscope,
+  Smile,
   Users,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
@@ -28,12 +28,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { branches } from "@/data/demo";
+import toothLogo from "@/assets/tooth-logo.png";
 
 const navItems = [
   { to: "/app", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/app/agenda", label: "Agenda", icon: CalendarDays },
   { to: "/app/pacientes", label: "Pacientes", icon: Users },
-  { to: "/app/clinica", label: "Gestión clínica", icon: Stethoscope },
+  { to: "/app/clinica", label: "Gestión clínica", icon: Smile },
   { to: "/app/comunicacion", label: "Comunicación", icon: MessagesSquare },
   { to: "/app/marketing", label: "Marketing", icon: Megaphone },
   { to: "/app/facturacion", label: "Facturación", icon: Receipt },
@@ -47,12 +48,12 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-16 items-center gap-2.5 border-b border-sidebar-border px-5">
-        <span className="flex size-9 items-center justify-center rounded-xl bg-hero-gradient">
-          <Stethoscope className="size-5 text-primary-foreground" />
+        <span className="flex size-9 items-center justify-center rounded-full bg-primary">
+          <img src={toothLogo} alt="Cloud Esther" className="size-6 object-contain" />
         </span>
         <div className="leading-tight">
-          <p className="font-display text-sm font-bold">DentalisPro</p>
-          <p className="text-xs text-muted-foreground">Grupo Dental Arriaga</p>
+          <p className="font-display text-sm font-bold">Cloud Esther</p>
+          <p className="text-xs text-muted-foreground">Centro de Control</p>
         </div>
       </div>
       <nav className="flex-1 space-y-1 overflow-y-auto p-3">
