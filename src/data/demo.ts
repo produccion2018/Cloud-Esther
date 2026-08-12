@@ -344,6 +344,129 @@ export const messageTemplates = [
   { name: "Post-operatorio implante", channel: "WhatsApp", uses: 187 },
 ];
 
+export type ReminderTrigger =
+  | "cita-48h"
+  | "cita-24h"
+  | "cita-2h"
+  | "post-visita"
+  | "tratamiento-pendiente"
+  | "revision-6-meses";
+
+export const reminderRules: {
+  id: string;
+  name: string;
+  description: string;
+  trigger: ReminderTrigger;
+  offset: string;
+  email: boolean;
+  whatsapp: boolean;
+  template: string;
+  enabled: boolean;
+  sent30d: number;
+  openRate: number;
+}[] = [
+  {
+    id: "r1",
+    name: "Recordatorio de cita 48 h",
+    description: "Aviso anticipado con fecha, hora, gabinete y odontólogo.",
+    trigger: "cita-48h",
+    offset: "48 h antes",
+    email: true,
+    whatsapp: true,
+    template: "Recordatorio 24 h",
+    enabled: true,
+    sent30d: 742,
+    openRate: 91,
+  },
+  {
+    id: "r2",
+    name: "Recordatorio de cita 24 h",
+    description: "Confirmación interactiva: el paciente responde SÍ o REPROGRAMAR.",
+    trigger: "cita-24h",
+    offset: "24 h antes",
+    email: false,
+    whatsapp: true,
+    template: "Confirmación de cita",
+    enabled: true,
+    sent30d: 1284,
+    openRate: 94,
+  },
+  {
+    id: "r3",
+    name: "Aviso el mismo día",
+    description: "Último recordatorio breve para reducir ausencias.",
+    trigger: "cita-2h",
+    offset: "2 h antes",
+    email: false,
+    whatsapp: true,
+    template: "Recordatorio 24 h",
+    enabled: true,
+    sent30d: 968,
+    openRate: 88,
+  },
+  {
+    id: "r4",
+    name: "Seguimiento post-visita",
+    description: "Indicaciones de cuidado y encuesta de satisfacción.",
+    trigger: "post-visita",
+    offset: "24 h después",
+    email: true,
+    whatsapp: false,
+    template: "Post-operatorio implante",
+    enabled: true,
+    sent30d: 517,
+    openRate: 72,
+  },
+  {
+    id: "r5",
+    name: "Tratamiento pendiente",
+    description: "Recuerda presupuestos aceptados sin cita agendada.",
+    trigger: "tratamiento-pendiente",
+    offset: "7 días después",
+    email: true,
+    whatsapp: true,
+    template: "Presupuesto pendiente",
+    enabled: false,
+    sent30d: 233,
+    openRate: 64,
+  },
+  {
+    id: "r6",
+    name: "Revisión semestral",
+    description: "Reactivación de pacientes sin visita en 6 meses.",
+    trigger: "revision-6-meses",
+    offset: "6 meses después",
+    email: true,
+    whatsapp: false,
+    template: "Paciente inactivo 6 meses",
+    enabled: true,
+    sent30d: 412,
+    openRate: 58,
+  },
+];
+
+export type ReminderLogStatus = "entregado" | "leído" | "confirmado" | "pendiente" | "fallido";
+
+export const reminderLog: {
+  id: string;
+  patient: string;
+  rule: string;
+  channel: "WhatsApp" | "Correo";
+  target: string;
+  sentAt: string;
+  status: ReminderLogStatus;
+  preview: string;
+}[] = [
+  { id: "rl1", patient: "Renata Quiroga", rule: "Recordatorio de cita 24 h", channel: "WhatsApp", target: "+54 9 11 5544-2211", sentAt: "Hoy 08:00", status: "confirmado", preview: "Hola Renata, te recordamos tu cita mañana a las 10:30 con la Dra. Moro." },
+  { id: "rl2", patient: "Tomás Vidal", rule: "Recordatorio de cita 48 h", channel: "Correo", target: "tomas.vidal@mail.com", sentAt: "Hoy 07:45", status: "leído", preview: "Tu cita de ortodoncia es el jueves 13/08 a las 17:00 — Sucursal Centro." },
+  { id: "rl3", patient: "Elena Cruz", rule: "Aviso el mismo día", channel: "WhatsApp", target: "+54 9 11 6677-9080", sentAt: "Hoy 07:10", status: "entregado", preview: "¡Hola Elena! Te esperamos hoy a las 09:10 en Gabinete 2." },
+  { id: "rl4", patient: "Pablo Iriarte", rule: "Seguimiento post-visita", channel: "Correo", target: "p.iriarte@mail.com", sentAt: "Ayer 19:20", status: "leído", preview: "Indicaciones post-operatorias y encuesta de satisfacción." },
+  { id: "rl5", patient: "Carla Núñez", rule: "Tratamiento pendiente", channel: "WhatsApp", target: "+54 9 11 3322-1180", sentAt: "Ayer 12:05", status: "pendiente", preview: "Tu presupuesto de ortodoncia sigue disponible por 15 días." },
+  { id: "rl6", patient: "Hernán Lasso", rule: "Revisión semestral", channel: "Correo", target: "hernan.lasso@mail.com", sentAt: "Lun 09:00", status: "fallido", preview: "Han pasado 6 meses desde tu última visita, agenda tu revisión." },
+  { id: "rl7", patient: "Sofía Bregman", rule: "Recordatorio de cita 24 h", channel: "WhatsApp", target: "+54 9 11 4410-7765", sentAt: "Lun 08:00", status: "confirmado", preview: "Hola Sofía, confirmá tu cita del martes a las 11:45." },
+  { id: "rl8", patient: "Marcos Ferrer", rule: "Recordatorio de cita 48 h", channel: "Correo", target: "m.ferrer@mail.com", sentAt: "Dom 18:30", status: "entregado", preview: "Recordatorio de tu limpieza dental del martes 11/08." },
+];
+
 export const leads = [
   { id: "l1", name: "Carla Núñez", source: "Google Ads", interest: "Ortodoncia invisible", stage: "Contactado", value: 3200 },
   { id: "l2", name: "Renata Quiroga", source: "Instagram", interest: "Blanqueamiento", stage: "Nuevo", value: 380 },
