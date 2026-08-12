@@ -1,6 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MessageCircle, Send, Smartphone, Sparkles, Zap } from "lucide-react";
-import { useState } from "react";
+import {
+  BellRing,
+  CalendarClock,
+  CheckCircle2,
+  Clock,
+  Mail,
+  MessageCircle,
+  Send,
+  Smartphone,
+  Sparkles,
+  Zap,
+} from "lucide-react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/app/DashboardShell";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -8,13 +19,54 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { conversations, messageTemplates } from "@/data/demo";
+import {
+  conversations,
+  messageTemplates,
+  reminderLog,
+  reminderRules,
+  type ReminderLogStatus,
+} from "@/data/demo";
 
 export const Route = createFileRoute("/app/comunicacion")({
   component: CommunicationPage,
 });
+
+const offsetOptions = [
+  "72 h antes",
+  "48 h antes",
+  "24 h antes",
+  "2 h antes",
+  "24 h después",
+  "7 días después",
+  "6 meses después",
+];
+
+const statusStyles: Record<ReminderLogStatus, string> = {
+  entregado: "bg-primary-soft text-primary border-primary/25",
+  leído: "bg-accent text-accent-foreground border-primary/20",
+  confirmado: "bg-success-soft text-success border-success/25",
+  pendiente: "bg-warning/15 text-warning-foreground border-warning/30",
+  fallido: "bg-destructive/10 text-destructive border-destructive/25",
+};
+
 
 const channelIcon: Record<string, typeof Mail> = {
   WhatsApp: MessageCircle,
