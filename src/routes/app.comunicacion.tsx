@@ -79,21 +79,224 @@ function CommunicationPage() {
   const [draft, setDraft] = useState("");
   const current = conversations.find((c) => c.id === active) ?? conversations[0];
 
+  const [rules, setRules] = useState(reminderRules);
+  const [log, setLog] = useState(reminderLog);
+  const [logChannel, setLogChannel] = useState("todos");
+
+  const updateRule = (id: string, patch: Partial<(typeof reminderRules)[number]>) => {
+    setRules((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  };
+
+  const sendTest = (ruleName: string, channel: "WhatsApp" | "Correo") => {
+    setLog((prev) => [
+      {
+        id: `test-${Date.now()}`,
+        patient: "Paciente de prueba",
+        rule: ruleName,
+        channel,
+        target: channel === "Correo" ? "demo@clinica.test" : "+54 9 11 0000-0000",
+        sentAt: "Ahora",
+        status: "entregado" as ReminderLogStatus,
+        preview: `Envío de prueba (modo demo) de «${ruleName}».`,
+      },
+      ...prev,
+    ]);
+    toast.success(`Prueba enviada por ${channel} (modo demo).`);
+  };
+
+  const filteredLog = useMemo(
+    () => (logChannel === "todos" ? log : log.filter((l) => l.channel === logChannel)),
+    [log, logChannel],
+  );
+
+  const activeRules = rules.filter((r) => r.enabled).length;
+  const sent30d = rules.reduce((sum, r) => sum + (r.enabled ? r.sent30d : 0), 0);
+
   return (
     <>
       <PageHeader
         title="Comunicación"
-        description="Bandeja unificada de WhatsApp, SMS y correo con plantillas, campañas y automatizaciones."
+        description="Bandeja unificada de WhatsApp, SMS y correo con plantillas, recordatorios automáticos y campañas."
         badge="6 sin leer"
       />
 
       <Tabs defaultValue="bandeja">
         <TabsList className="flex flex-wrap">
           <TabsTrigger value="bandeja">Bandeja</TabsTrigger>
+          <TabsTrigger value="recordatorios">Recordatorios</TabsTrigger>
           <TabsTrigger value="plantillas">Plantillas</TabsTrigger>
           <TabsTrigger value="campanas">Campañas</TabsTrigger>
           <TabsTrigger value="automatizaciones">Automatizaciones</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="recordatorios" className="mt-4 space-y-5">
+          <div className="grid gap-4 sm:grid-cols-3">
+            <MiniStat icon={BellRing} label="Reglas activas" value={`${activeRules} de ${rules.length}`} />
+            <MiniStat icon={Send} label="Enviados últimos 30 días" value={sent30d.toLocaleString("es-AR")} />
+            <MiniStat icon={CheckCircle2} label="Tasa de confirmación" value="87 %" />
+          </div>
+
+          <Card className="shadow-soft">
+            <CardHeader className="flex-row items-center justify-between">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <CalendarClock className="size-4 text-primary" /> Reglas de recordatorio
+              </CardTitle>
+              <Badge variant="outline">Modo demo</Badge>
+            </CardHeader>
+            <CardContent className="divide-y divide-border p-0">
+              {rules.map((r) => (
+                <div key={r.id} className="space-y-4 p-5">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold">{r.name}</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">{r.description}</p>
+                      <p className="mt-1.5 text-[11px] text-muted-foreground">
+                        {r.sent30d} envíos · {r.openRate} % de apertura
+                      </p>
+                    </div>
+                    <Switch
+                      checked={r.enabled}
+                      onCheckedChange={(v) => {
+                        updateRule(r.id, { enabled: v });
+                        toast.success(v ? "Recordatorio activado." : "Recordatorio desactivado.");
+                      }}
+                    />
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-4">
+                    <div className="space-y-1.5">
+                      <Label className="text-xs text-muted-foreground">Momento de envío</Label>
+                      <Select
+                        value={r.offset}
+                        onValueChange={(v) => {
+                          updateRule(r.id, { offset: v });
+                          toast.success("Programación actualizada.");
+                        }}
+                      >
+                        <SelectTrigger disabled={!r.enabled}>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {offsetOptions.map((o) => (
+                            <SelectItem key={o} value={o}>{o}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label className="text-xs text-muted-foreground">Plantilla</Label>
+                      <Select
+                        value={r.template}
+                        onValueChange={(v) => {
+                          updateRule(r.id, { template: v });
+                          toast.success("Plantilla asignada.");
+                        }}
+                      >
+                        <SelectTrigger disabled={!r.enabled}>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {messageTemplates.map((t) => (
+                            <SelectItem key={t.name} value={t.name}>{t.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2 md:col-span-2">
+                      <Label className="text-xs text-muted-foreground">Canales</Label>
+                      <div className="flex flex-wrap gap-2">
+                        <ChannelToggle
+                          icon={MessageCircle}
+                          label="WhatsApp"
+                          active={r.whatsapp}
+                          disabled={!r.enabled}
+                          onToggle={() => updateRule(r.id, { whatsapp: !r.whatsapp })}
+                        />
+                        <ChannelToggle
+                          icon={Mail}
+                          label="Correo"
+                          active={r.email}
+                          disabled={!r.enabled}
+                          onToggle={() => updateRule(r.id, { email: !r.email })}
+                        />
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="gap-2"
+                          disabled={!r.enabled || (!r.whatsapp && !r.email)}
+                          onClick={() => sendTest(r.name, r.whatsapp ? "WhatsApp" : "Correo")}
+                        >
+                          <Send className="size-3.5" /> Enviar prueba
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-soft">
+            <CardHeader className="flex-row items-center justify-between gap-3">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Clock className="size-4 text-primary" /> Historial de recordatorios
+              </CardTitle>
+              <Select value={logChannel} onValueChange={setLogChannel}>
+                <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos los canales</SelectItem>
+                  <SelectItem value="WhatsApp">WhatsApp</SelectItem>
+                  <SelectItem value="Correo">Correo</SelectItem>
+                </SelectContent>
+              </Select>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Paciente</TableHead>
+                      <TableHead>Regla</TableHead>
+                      <TableHead>Canal</TableHead>
+                      <TableHead>Destino</TableHead>
+                      <TableHead>Enviado</TableHead>
+                      <TableHead>Estado</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredLog.map((l) => (
+                      <TableRow key={l.id}>
+                        <TableCell className="font-medium">
+                          {l.patient}
+                          <p className="max-w-xs truncate text-xs font-normal text-muted-foreground">{l.preview}</p>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{l.rule}</TableCell>
+                        <TableCell>
+                          <span className="inline-flex items-center gap-1.5 text-sm">
+                            {l.channel === "Correo" ? <Mail className="size-3.5" /> : <MessageCircle className="size-3.5" />}
+                            {l.channel}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{l.target}</TableCell>
+                        <TableCell className="text-muted-foreground">{l.sentAt}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className={`capitalize ${statusStyles[l.status]}`}>{l.status}</Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+
+          <p className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Sparkles className="size-4 text-primary" /> En modo demo no se realizan envíos reales: los recordatorios se registran en el historial.
+          </p>
+        </TabsContent>
+
 
         <TabsContent value="bandeja" className="mt-4">
           <div className="grid gap-5 lg:grid-cols-3">
