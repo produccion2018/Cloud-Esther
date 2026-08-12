@@ -466,3 +466,55 @@ function Bubble({ side, text, time }: { side: "in" | "out"; text: string; time: 
     </div>
   );
 }
+
+function MiniStat({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: typeof Mail;
+  label: string;
+  value: string;
+}) {
+  return (
+    <Card className="shadow-soft">
+      <CardContent className="flex items-center gap-3 p-5">
+        <span className="flex size-10 items-center justify-center rounded-xl bg-primary-soft text-primary">
+          <Icon className="size-5" />
+        </span>
+        <div>
+          <p className="text-xs text-muted-foreground">{label}</p>
+          <p className="font-display text-lg font-bold tracking-tight">{value}</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function ChannelToggle({
+  icon: Icon,
+  label,
+  active,
+  disabled,
+  onToggle,
+}: {
+  icon: typeof Mail;
+  label: string;
+  active: boolean;
+  disabled?: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <Button
+      type="button"
+      size="sm"
+      variant={active ? "default" : "outline"}
+      disabled={disabled}
+      aria-pressed={active}
+      className="gap-2"
+      onClick={onToggle}
+    >
+      <Icon className="size-3.5" /> {label}
+    </Button>
+  );
+}
