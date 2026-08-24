@@ -27,11 +27,16 @@ export function StatCard({
   }[tone];
 
   return (
-    <Card className="shadow-soft">
-      <CardContent className="p-5">
+    <Card className="ce-card-hover relative overflow-hidden shadow-soft">
+      {/* Círculo decorativo suave, recortado por el borde de la tarjeta —
+          mismo detalle visual de la referencia, puramente estético. */}
+      <div className="pointer-events-none absolute -right-5 -top-5 size-20 rounded-full bg-muted/70" />
+      <CardContent className="relative p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-sm font-medium text-muted-foreground">{label}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+              {label}
+            </p>
             <p className="mt-2 font-display text-2xl font-bold tracking-tight">{value}</p>
           </div>
           <span className={`flex size-10 items-center justify-center rounded-xl ${toneClass}`}>

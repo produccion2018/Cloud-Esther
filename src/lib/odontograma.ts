@@ -1,0 +1,13 @@
+export type ToothStatus = "sano" | "caries" | "obturado" | "corona" | "implante" | "ausente";
+
+export const TOOTH_STATUS_LABELS: Record<ToothStatus, string> = {
+  sano: "Sano",
+  caries: "Caries",
+  obturado: "Obturado",
+  corona: "Corona",
+  implante: "Implante",
+  ausente: "Ausente",
+};
+
+export const UPPER_TEETH = [18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27, 28];
+export const LOWER_TEETH = [48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38];

@@ -1,3 +1,44 @@
+import modAgenda from "@/assets/modulos/mod-agenda.png";
+import modPacientes from "@/assets/modulos/mod-pacientes.png";
+import modHistoriaClinica from "@/assets/modulos/mod-historia-clinica.png";
+import modMensajes from "@/assets/modulos/mod-mensajes.png";
+import modMarketing from "@/assets/modulos/mod-marketing.png";
+import modFacturacion from "@/assets/modulos/mod-facturacion.png";
+import modReportes from "@/assets/modulos/mod-reportes.png";
+import modUsuarios from "@/assets/modulos/mod-usuarios.png";
+import modConfiguracion from "@/assets/modulos/mod-configuracion.png";
+import modClinicas from "@/assets/modulos/mod-clinicas.png";
+import modTurnos from "@/assets/modulos/mod-turnos.png";
+import modLaboratorio from "@/assets/modulos/mod-laboratorio.png";
+import modInventario from "@/assets/modulos/mod-inventario.png";
+import modCajaFinanzas from "@/assets/modulos/mod-caja-finanzas.png";
+import modNotificaciones from "@/assets/modulos/mod-notificaciones.png";
+import modIAEsther from "@/assets/modulos/mod-ia-esther.png";
+import modRecursosHumanos from "@/assets/modulos/mod-recursos-humanos.png";
+import modEstudiosDiagnostico from "@/assets/modulos/mod-estudios-diagnostico.png";
+import modPortalPaciente from "@/assets/modulos/mod-portal-paciente.png";
+import modIntegraciones from "@/assets/modulos/mod-integraciones.png";
+import modAvatarAgenda from "@/assets/avatares/avatar-agenda.png";
+import modAvatarPacientes from "@/assets/avatares/avatar-pacientes.png";
+import modAvatarClinica from "@/assets/avatares/avatar-clinica.png";
+import modAvatarTurnos from "@/assets/avatares/avatar-turnos.png";
+import modAvatarNotificaciones from "@/assets/avatares/avatar-notificaciones.png";
+import modAvatarComunicacion from "@/assets/avatares/avatar-comunicacion.png";
+import modAvatarFacturacion from "@/assets/avatares/avatar-facturacion.png";
+import modAvatarAnalitica from "@/assets/avatares/avatar-analitica.png";
+import modAvatarLaboratorio from "@/assets/avatares/avatar-laboratorio.png";
+import modAvatarCajaFinanzas from "@/assets/avatares/avatar-caja-finanzas.png";
+import modAvatarMarketing from "@/assets/avatares/avatar-marketing.png";
+import modAvatarDirectorio from "@/assets/avatares/avatar-directorio.png";
+import modAvatarSeguridad from "@/assets/avatares/avatar-seguridad.png";
+import modAvatarInventario from "@/assets/avatares/avatar-inventario.png";
+import modAvatarRecursosHumanos from "@/assets/avatares/avatar-recursos-humanos.png";
+import modAvatarMultiempresa from "@/assets/avatares/avatar-multiempresa.png";
+import modAvatarIaEsther from "@/assets/avatares/avatar-ia-esther.png";
+import modAvatarEstudiosDiagnostico from "@/assets/avatares/avatar-estudios-diagnostico.png";
+import modAvatarPortalPaciente from "@/assets/avatares/avatar-portal-paciente.png";
+import modAvatarIntegraciones from "@/assets/avatares/avatar-integraciones.png";
+
 export type ModuleKey =
   | "agenda"
   | "pacientes"
@@ -8,19 +49,37 @@ export type ModuleKey =
   | "analitica"
   | "directorio"
   | "seguridad"
-  | "multiempresa";
+  | "multiempresa"
+  | "turnos"
+  | "laboratorio"
+  | "inventario"
+  | "caja-finanzas"
+  | "notificaciones"
+  | "ia-esther"
+  | "recursos-humanos"
+  | "estudios-diagnostico"
+  | "portal-paciente"
+  | "integraciones"
+  | "presupuestos"
+  | "equipo-profesional"
+  | "documentos";
 
 export const modules: {
   key: ModuleKey;
   name: string;
   icon: string;
+  image: string;
+  avatar: string;
   description: string;
   bullets: string[];
+  tag?: string;
 }[] = [
   {
     key: "agenda",
+    avatar: modAvatarAgenda,
     name: "Agenda y gestión de citas",
     icon: "CalendarDays",
+    image: modAgenda,
     description:
       "Calendario diario, semanal y mensual por sucursal, odontólogo y gabinete, con recordatorios automáticos.",
     bullets: [
@@ -32,8 +91,10 @@ export const modules: {
   },
   {
     key: "pacientes",
+    avatar: modAvatarPacientes,
     name: "Gestión de pacientes",
     icon: "Users",
+    image: modPacientes,
     description:
       "Ficha clínica completa con antecedentes, documentos, consentimientos y estado del paciente.",
     bullets: [
@@ -45,8 +106,10 @@ export const modules: {
   },
   {
     key: "clinica",
+    avatar: modAvatarClinica,
     name: "Gestión clínica",
     icon: "Stethoscope",
+    image: modHistoriaClinica,
     description:
       "Odontograma visual, diagnósticos, evoluciones, planes de tratamiento y presupuestos aprobables.",
     bullets: [
@@ -54,12 +117,45 @@ export const modules: {
       "Planes de tratamiento por fases",
       "Presupuestos y aprobación digital",
       "Seguimiento del progreso clínico",
+      "Recetas digitales con autorización automática según reglas predefinidas por el odontólogo",
+    ],
+  },
+  {
+    key: "turnos",
+    avatar: modAvatarTurnos,
+    name: "Turnos",
+    icon: "Calendar",
+    image: modTurnos,
+    description:
+      "Gestión rápida de turnos individuales, con confirmación y reprogramación en un clic.",
+    bullets: [
+      "Confirmación con un toque",
+      "Reprogramación sin llamadas",
+      "Vista rápida de disponibilidad",
+      "Historial de turnos por paciente",
+    ],
+  },
+  {
+    key: "notificaciones",
+    avatar: modAvatarNotificaciones,
+    name: "Notificaciones",
+    icon: "Bell",
+    image: modNotificaciones,
+    description:
+      "Alertas automáticas para tu equipo y tus pacientes, sin depender de que alguien se acuerde.",
+    bullets: [
+      "Alertas al equipo en tiempo real",
+      "Avisos automáticos a pacientes",
+      "Configuración por tipo de evento",
+      "Historial de notificaciones enviadas",
     ],
   },
   {
     key: "comunicacion",
+    avatar: modAvatarComunicacion,
     name: "Comunicación con pacientes",
     icon: "MessagesSquare",
+    image: modMensajes,
     description:
       "Bandeja unificada de WhatsApp, correo y SMS con plantillas y automatizaciones.",
     bullets: [
@@ -70,22 +166,11 @@ export const modules: {
     ],
   },
   {
-    key: "marketing",
-    name: "Marketing y captación",
-    icon: "Megaphone",
-    description:
-      "Página pública de la clínica, formularios de captación, leads, referidos y reseñas verificadas.",
-    bullets: [
-      "Perfil público y especialidades",
-      "Gestión de leads y embudo",
-      "Programa de referidos",
-      "Reseñas verificadas y contenido",
-    ],
-  },
-  {
     key: "facturacion",
+    avatar: modAvatarFacturacion,
     name: "Facturación y pagos",
     icon: "Receipt",
+    image: modFacturacion,
     description:
       "Facturas, cobros, presupuestos, métodos de pago y control de la suscripción de la clínica.",
     bullets: [
@@ -96,9 +181,26 @@ export const modules: {
     ],
   },
   {
+    key: "presupuestos",
+    avatar: modAvatarFacturacion,
+    name: "Presupuestos",
+    icon: "FileSpreadsheet",
+    image: modFacturacion,
+    description:
+      "Planes de tratamiento valorizados, aprobación digital y seguimiento de conversión antes de facturar.",
+    bullets: [
+      "Presupuestos por plan de tratamiento",
+      "Aprobación digital del paciente",
+      "Seguimiento de conversión",
+      "Conversión automática a factura",
+    ],
+  },
+  {
     key: "analitica",
+    avatar: modAvatarAnalitica,
     name: "Analítica y reportes",
     icon: "BarChart3",
+    image: modReportes,
     description:
       "Indicadores de producción, ocupación, conversión de leads y rendimiento por odontólogo y sucursal.",
     bullets: [
@@ -109,9 +211,56 @@ export const modules: {
     ],
   },
   {
+    key: "laboratorio",
+    avatar: modAvatarLaboratorio,
+    name: "Laboratorio",
+    icon: "FlaskConical",
+    image: modLaboratorio,
+    description:
+      "Seguimiento de pedidos a laboratorios externos, con estado y entrega estimada.",
+    bullets: [
+      "Pedidos por paciente y tratamiento",
+      "Estado en tiempo real",
+      "Fecha estimada de entrega",
+      "Historial por laboratorio",
+    ],
+  },
+  {
+    key: "caja-finanzas",
+    avatar: modAvatarCajaFinanzas,
+    name: "Caja / Finanzas",
+    icon: "Wallet",
+    image: modCajaFinanzas,
+    description:
+      "Caja diaria, ingresos y egresos consolidados de cada clínica.",
+    bullets: [
+      "Apertura y cierre de caja",
+      "Ingresos y egresos del día",
+      "Consolidado por sucursal",
+      "Exportación contable",
+    ],
+  },
+  {
+    key: "marketing",
+    avatar: modAvatarMarketing,
+    name: "Marketing y captación",
+    icon: "Megaphone",
+    image: modMarketing,
+    description:
+      "Página pública de la clínica, formularios de captación, leads, referidos y reseñas verificadas.",
+    bullets: [
+      "Perfil público y especialidades",
+      "Gestión de leads y embudo",
+      "Programa de referidos",
+      "Reseñas verificadas y contenido",
+    ],
+  },
+  {
     key: "directorio",
+    avatar: modAvatarDirectorio,
     name: "Directorio de clínicas y odontólogos",
     icon: "MapPin",
+    image: modUsuarios,
     description:
       "Perfiles públicos indexables para captar pacientes nuevos desde buscadores.",
     bullets: [
@@ -123,8 +272,10 @@ export const modules: {
   },
   {
     key: "seguridad",
+    avatar: modAvatarSeguridad,
     name: "Seguridad y control de accesos",
     icon: "ShieldCheck",
+    image: modConfiguracion,
     description:
       "Roles granulares, auditoría de actividad, copias de respaldo y trazabilidad clínica.",
     bullets: [
@@ -135,9 +286,60 @@ export const modules: {
     ],
   },
   {
+    key: "inventario",
+    avatar: modAvatarInventario,
+    name: "Inventario",
+    icon: "Package",
+    image: modInventario,
+    description:
+      "Stock, alertas de faltantes y control de compras de insumos.",
+    bullets: [
+      "Stock por sucursal",
+      "Alertas de faltantes",
+      "Órdenes de compra",
+      "Historial de consumo",
+    ],
+  },
+  {
+    key: "recursos-humanos",
+    avatar: modAvatarRecursosHumanos,
+    name: "Recursos Humanos",
+    icon: "Briefcase",
+    image: modRecursosHumanos,
+    tag: "Con IA",
+    description:
+      "Empleados, vacaciones, nómina, contratos y capacitación del equipo, con automatizaciones para comunicación interna.",
+    bullets: [
+      "Legajos del equipo",
+      "Vacaciones y licencias",
+      "Nómina por sucursal",
+      "Contratos y documentación",
+      "Capacitación del equipo integrada al panel",
+      "Automatizaciones con n8n para el envío masivo de comunicados y correos internos",
+      "Respuesta automática de correos con IA: lee, entiende y responde consultas frecuentes sin intervención manual",
+    ],
+  },
+  {
+    key: "equipo-profesional",
+    avatar: modAvatarRecursosHumanos,
+    name: "Equipo profesional",
+    icon: "Stethoscope",
+    image: modRecursosHumanos,
+    description:
+      "Odontólogos, asistentes y secretarias con su propia agenda, especialidad y comisiones.",
+    bullets: [
+      "Ficha por odontólogo y asistente",
+      "Agenda y disponibilidad individual",
+      "Comisiones por tratamiento",
+      "Especialidades y certificaciones",
+    ],
+  },
+  {
     key: "multiempresa",
+    avatar: modAvatarMultiempresa,
     name: "Administración multiempresa",
     icon: "Building2",
+    image: modClinicas,
     description:
       "Un solo panel para grupos odontológicos con datos separados por organización y sucursal.",
     bullets: [
@@ -145,6 +347,83 @@ export const modules: {
       "Consolidado del grupo",
       "Comparativa entre clínicas",
       "Configuración centralizada",
+    ],
+  },
+  {
+    key: "ia-esther",
+    avatar: modAvatarIaEsther,
+    name: "IA Esther",
+    icon: "Sparkles",
+    image: modIAEsther,
+    description:
+      "Asistente de inteligencia artificial que responde preguntas del negocio en lenguaje natural.",
+    bullets: [
+      "Preguntas en lenguaje natural",
+      "Resúmenes automáticos de gestión",
+      "Alertas inteligentes",
+      "Disponible en todo el panel",
+    ],
+  },
+  {
+    key: "estudios-diagnostico",
+    avatar: modAvatarEstudiosDiagnostico,
+    name: "Estudios y diagnóstico por imagen",
+    icon: "ScanLine",
+    image: modEstudiosDiagnostico,
+    description:
+      "Visor centralizado de radiografías, fotografías clínicas y estudios de diagnóstico por imagen, vinculados directamente a la ficha de cada paciente.",
+    bullets: [
+      "Visor de radiografías y estudios por paciente",
+      "Comparación de imágenes entre visitas",
+      "Anotaciones y mediciones sobre la imagen",
+      "Adjuntos vinculados al plan de tratamiento",
+    ],
+  },
+  {
+    key: "portal-paciente",
+    avatar: modAvatarPortalPaciente,
+    name: "Portal del paciente",
+    icon: "UserCircle2",
+    image: modPortalPaciente,
+    tag: "Autogestión",
+    description:
+      "Espacio propio para que cada paciente reserve turnos, vea su historial y descargue comprobantes sin llamar a la clínica.",
+    bullets: [
+      "Reserva y reprogramación de turnos online",
+      "Historial de tratamientos y presupuestos",
+      "Descarga de comprobantes y facturas",
+      "Acceso desde el celular, sin instalar nada",
+    ],
+  },
+  {
+    key: "integraciones",
+    avatar: modAvatarIntegraciones,
+    name: "Integraciones",
+    icon: "Plug",
+    image: modIntegraciones,
+    tag: "Nuevo",
+    description:
+      "Conecta Cloud Esther con las herramientas que tu clínica ya usa, para no cargar la misma cita dos veces.",
+    bullets: [
+      "Sincronización con Doctoralia",
+      "Sincronización con Google Calendar",
+      "Webhooks para conectar con otras herramientas",
+      "Configuración por sucursal",
+    ],
+  },
+  {
+    key: "documentos",
+    avatar: modAvatarSeguridad,
+    name: "Documentos",
+    icon: "FolderOpen",
+    image: modConfiguracion,
+    description:
+      "Consentimientos informados, plantillas y archivos exportables por paciente o por clínica.",
+    bullets: [
+      "Consentimientos con firma digital",
+      "Plantillas reutilizables",
+      "Archivos por paciente y por clínica",
+      "Exportación en PDF",
     ],
   },
 ];
@@ -169,35 +448,48 @@ export const plans: Plan[] = [
     id: "inicial",
     name: "Clínica Inicial",
     tagline: "Para clínicas que empiezan a digitalizarse",
-    monthly: 79,
-    setup: 390,
+    monthly: 49900,
+    setup: 99000,
     branches: "1 sucursal",
     users: "Hasta 5 usuarios",
     support: "Soporte por correo (48 h)",
     analytics: "Reportes básicos",
     automations: "Recordatorios de cita",
-    modules: ["agenda", "pacientes", "clinica"],
+    modules: ["agenda", "pacientes", "clinica", "turnos", "notificaciones"],
   },
   {
     id: "profesional",
     name: "Clínica Profesional",
     tagline: "La opción más elegida por clínicas en crecimiento",
-    monthly: 149,
-    setup: 690,
+    monthly: 89900,
+    setup: 179000,
     branches: "Hasta 2 sucursales",
     users: "Usuarios ilimitados",
     support: "Soporte prioritario (24 h)",
     analytics: "Analítica avanzada",
     automations: "Recordatorios + reactivación",
-    modules: ["agenda", "pacientes", "clinica", "comunicacion", "facturacion", "analitica"],
+    modules: [
+      "agenda",
+      "pacientes",
+      "clinica",
+      "turnos",
+      "notificaciones",
+      "comunicacion",
+      "facturacion",
+      "presupuestos",
+      "analitica",
+      "laboratorio",
+      "caja-finanzas",
+      "portal-paciente",
+    ],
     highlighted: true,
   },
   {
     id: "avanzada",
     name: "Clínica Avanzada",
     tagline: "Para clínicas con alto volumen y equipo comercial",
-    monthly: 249,
-    setup: 1190,
+    monthly: 164900,
+    setup: 299000,
     branches: "Hasta 5 sucursales",
     users: "Usuarios y empleados ilimitados",
     support: "Soporte dedicado + WhatsApp",
@@ -207,20 +499,32 @@ export const plans: Plan[] = [
       "agenda",
       "pacientes",
       "clinica",
+      "turnos",
+      "notificaciones",
       "comunicacion",
-      "marketing",
       "facturacion",
+      "presupuestos",
       "analitica",
+      "laboratorio",
+      "caja-finanzas",
+      "marketing",
       "directorio",
       "seguridad",
+      "inventario",
+      "recursos-humanos",
+      "equipo-profesional",
+      "documentos",
+      "estudios-diagnostico",
+      "portal-paciente",
+      "integraciones",
     ],
   },
   {
     id: "grupo",
     name: "Grupo Odontológico",
     tagline: "Multiempresa, multisucursal y administración central",
-    monthly: 429,
-    setup: 2490,
+    monthly: 284900,
+    setup: 499000,
     branches: "Sucursales ilimitadas",
     users: "Ilimitados por organización",
     support: "Gestor de cuenta y SLA",
@@ -230,24 +534,36 @@ export const plans: Plan[] = [
       "agenda",
       "pacientes",
       "clinica",
+      "turnos",
+      "notificaciones",
       "comunicacion",
-      "marketing",
       "facturacion",
+      "presupuestos",
       "analitica",
+      "laboratorio",
+      "caja-finanzas",
+      "marketing",
       "directorio",
       "seguridad",
+      "inventario",
+      "recursos-humanos",
+      "equipo-profesional",
+      "documentos",
       "multiempresa",
+      "ia-esther",
+      "estudios-diagnostico",
+      "portal-paciente",
+      "integraciones",
     ],
   },
 ];
 
 export const addOns = [
-  { name: "Sucursal adicional", price: 39, unit: "mes" },
-  { name: "Módulo de marketing", price: 45, unit: "mes" },
-  { name: "WhatsApp Business API", price: 35, unit: "mes" },
-  { name: "Firma electrónica avanzada", price: 25, unit: "mes" },
-  { name: "Portal del paciente", price: 29, unit: "mes" },
-  { name: "Migración de historiales", price: 350, unit: "único" },
+  { name: "Sucursal adicional", price: 24900, unit: "mes" },
+  { name: "Módulo de marketing", price: 28900, unit: "mes" },
+  { name: "WhatsApp Business API", price: 22900, unit: "mes" },
+  { name: "Firma electrónica avanzada", price: 15900, unit: "mes" },
+  { name: "Migración de historiales", price: 149000, unit: "único" },
 ];
 
 export const branches = [
@@ -551,4 +867,4 @@ export const moduleNameByKey: Record<ModuleKey, string> = Object.fromEntries(
 ) as Record<ModuleKey, string>;
 
 export const currency = (n: number) =>
-  new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
+  new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(n);

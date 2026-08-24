@@ -54,7 +54,6 @@
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
   /* Tipografía de Cloud Esther (misma que el Sidebar del proyecto original):
      Inter para texto normal, Plus Jakarta Sans para títulos/logo. */
   --font-sans: "Inter", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
@@ -123,6 +122,9 @@
      claro/periwinkle — usado en el hero público y como acento de marca. */
   --gradient-hero: linear-gradient(180deg, oklch(0.4 0.19 292), oklch(0.55 0.21 288) 45%, oklch(0.8 0.09 280) 100%);
   --gradient-soft: linear-gradient(180deg, oklch(0.96 0.025 292), oklch(1 0 0));
+  /* Degradé celeste muy sutil (celeste cielo → blanco), para el fondo
+     general del sitio público, en vez del lavanda de --gradient-soft. */
+  --gradient-sky: linear-gradient(180deg, oklch(0.95 0.035 230) 0%, oklch(1 0 0) 100%);
   --shadow-soft: 0 1px 2px oklch(0.3 0.09 292 / 0.05), 0 8px 24px -12px oklch(0.3 0.09 292 / 0.2);
   --shadow-lift: 0 24px 48px -24px oklch(0.35 0.15 292 / 0.4);
 }
@@ -187,12 +189,118 @@
   background-image: var(--gradient-soft);
 }
 
+@utility bg-sky-gradient {
+  background-image: var(--gradient-sky);
+}
+
+/* Fondo de la portada de Características: como bg-soft-gradient pero con
+   un toque más de color/luz (un resplandor violeta radial de fondo),
+   sin tocar el bg-soft-gradient original que se usa en otros lados. */
+@utility bg-caracteristicas-hero {
+  background-image:
+    radial-gradient(60% 55% at 78% 30%, oklch(0.85 0.09 292 / 0.55), transparent),
+    var(--gradient-soft);
+}
+
 @utility shadow-soft {
   box-shadow: var(--shadow-soft);
 }
 
 @utility shadow-lift {
   box-shadow: var(--shadow-lift);
+}
+
+/* Entrada simple de la ilustración del Hero: aparece de una vez con un
+   fade suave, sin desplazamiento ni caminata. */
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 0.92;
+    transform: scale(1);
+  }
+}
+
+/* Una vez que ya apareció, queda en un ciclo infinito suave: se desvanece
+   un poco y vuelve, como una respiración — nunca llega a opacidad 0. */
+@keyframes hero-breathe {
+  0%, 100% {
+    opacity: 0.92;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@utility animate-hero-fade-in {
+  animation:
+    hero-fade-in 0.7s ease-out both,
+    hero-breathe 4.5s ease-in-out 0.7s infinite;
+}
+
+/* Flotado suave e infinito para los muñecos/avatares de la sección de
+   módulos — como si respiraran en el aire. Arranca recién cuando la fila
+   ya apareció por scroll (se agrega la clase desde React, no antes). */
+@keyframes avatar-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@utility animate-avatar-float {
+  animation: avatar-float 3.2s ease-in-out infinite;
+}
+
+/* Tarjetas de todo el panel: fondo con un toque muy sutil de celeste
+   cielo (mismo tono que --gradient-sky, hue 230) en vez de blanco puro,
+   y borde teñido de violeta de marca en reposo. Usa color-mix() sobre
+   var(--card)/var(--border) en vez de un gradiente fijo para que se
+   adapte solo en modo oscuro (si no, el celeste clarito quedaría pegado
+   arriba de un fondo oscuro y se vería como un parche).
+   Al pasar el mouse, se intensifica: borde violeta sólido + brillo +
+   se levanta un toque (translateY). */
+.ce-card-hover {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in oklch, oklch(0.95 0.035 230) 45%, var(--card)) 0%,
+    var(--card) 75%
+  );
+  border-color: color-mix(in oklch, var(--primary) 26%, var(--border));
+  transition:
+    box-shadow 0.55s ease,
+    transform 0.55s ease,
+    border-color 0.55s ease,
+    background-image 0.55s ease;
+}
+
+.ce-card-hover:hover {
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 1px color-mix(in oklch, var(--primary) 35%, transparent),
+    0 0 24px 2px color-mix(in oklch, var(--primary) 25%, transparent),
+    var(--shadow-lift);
+  transform: translateY(-3px);
+}
+
+/* Degradé del CTA final: movimiento sutil e infinito, para que se sienta
+   "vivo" mientras la persona navega la página, sin ser vistoso ni distraer. */
+.ce-gradient-flow {
+  background-size: 220% 220%;
+  animation: ce-gradient-flow-move 10s ease-in-out infinite;
+}
+
+@keyframes ce-gradient-flow-move {
+  0%, 100% {
+    background-position: 0% 30%;
+  }
+  50% {
+    background-position: 100% 70%;
+  }
 }
 
 /* Entrada caminando: el diente se desliza horizontalmente, lento y parejo. */
@@ -271,4 +379,33 @@
     tooth-walk-in 6s linear both,
     tooth-idle-sway 2.6s ease-in-out 6s infinite;
   transform-origin: bottom center;
+}
+
+/* Scrollbar fina y discreta para el menú lateral: invisible en reposo,
+   aparece delgada solo al pasar el mouse por el sidebar (clase
+   ce-sidebar-scroll agregada en DashboardShell.tsx). */
+.ce-sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.ce-sidebar-scroll:hover {
+  scrollbar-color: color-mix(in oklch, var(--sidebar-foreground) 25%, transparent) transparent;
+}
+
+.ce-sidebar-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.ce-sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ce-sidebar-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+}
+
+.ce-sidebar-scroll:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in oklch, var(--sidebar-foreground) 25%, transparent);
 }

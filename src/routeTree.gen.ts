@@ -14,15 +14,26 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as CaracteristicasRouteImport } from './routes/caracteristicas'
 import { Route as DemostracionRouteImport } from './routes/demostracion'
 import { Route as PlanesRouteImport } from './routes/planes'
+import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAgendaRouteImport } from './routes/app.agenda'
 import { Route as AppAnaliticaRouteImport } from './routes/app.analitica'
 import { Route as AppClinicaRouteImport } from './routes/app.clinica'
 import { Route as AppComunicacionRouteImport } from './routes/app.comunicacion'
 import { Route as AppConfiguracionRouteImport } from './routes/app.configuracion'
-import { Route as AppFacturacionRouteImport } from './routes/app.facturacion'
+import { Route as AppDocumentosRouteImport } from './routes/app.documentos'
+import { Route as AppEquipoRouteImport } from './routes/app.equipo'
+import { Route as AppEstudiosDiagnosticoRouteImport } from './routes/app.estudios-diagnostico'
+import { Route as AppFinanzasRouteImport } from './routes/app.finanzas'
+import { Route as AppIaEstherRouteImport } from './routes/app.ia-esther'
+import { Route as AppIntegracionesRouteImport } from './routes/app.integraciones'
+import { Route as AppInventarioRouteImport } from './routes/app.inventario'
+import { Route as AppLaboratorioRouteImport } from './routes/app.laboratorio'
 import { Route as AppMarketingRouteImport } from './routes/app.marketing'
+import { Route as AppMultiempresaRouteImport } from './routes/app.multiempresa'
+import { Route as AppNotificacionesRouteImport } from './routes/app.notificaciones'
 import { Route as AppPacientesRouteImport } from './routes/app.pacientes'
+import { Route as AppPortalPacienteRouteImport } from './routes/app.portal-paciente'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -47,6 +58,11 @@ const DemostracionRoute = DemostracionRouteImport.update({
 const PlanesRoute = PlanesRouteImport.update({
   id: '/planes',
   path: '/planes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistroRoute = RegistroRouteImport.update({
+  id: '/registro',
+  path: '/registro',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -79,9 +95,44 @@ const AppConfiguracionRoute = AppConfiguracionRouteImport.update({
   path: '/configuracion',
   getParentRoute: () => AppRoute,
 } as any)
-const AppFacturacionRoute = AppFacturacionRouteImport.update({
-  id: '/facturacion',
-  path: '/facturacion',
+const AppDocumentosRoute = AppDocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEquipoRoute = AppEquipoRouteImport.update({
+  id: '/equipo',
+  path: '/equipo',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEstudiosDiagnosticoRoute = AppEstudiosDiagnosticoRouteImport.update({
+  id: '/estudios-diagnostico',
+  path: '/estudios-diagnostico',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFinanzasRoute = AppFinanzasRouteImport.update({
+  id: '/finanzas',
+  path: '/finanzas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIaEstherRoute = AppIaEstherRouteImport.update({
+  id: '/ia-esther',
+  path: '/ia-esther',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIntegracionesRoute = AppIntegracionesRouteImport.update({
+  id: '/integraciones',
+  path: '/integraciones',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInventarioRoute = AppInventarioRouteImport.update({
+  id: '/inventario',
+  path: '/inventario',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLaboratorioRoute = AppLaboratorioRouteImport.update({
+  id: '/laboratorio',
+  path: '/laboratorio',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMarketingRoute = AppMarketingRouteImport.update({
@@ -89,9 +140,24 @@ const AppMarketingRoute = AppMarketingRouteImport.update({
   path: '/marketing',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMultiempresaRoute = AppMultiempresaRouteImport.update({
+  id: '/multiempresa',
+  path: '/multiempresa',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotificacionesRoute = AppNotificacionesRouteImport.update({
+  id: '/notificaciones',
+  path: '/notificaciones',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPacientesRoute = AppPacientesRouteImport.update({
   id: '/pacientes',
   path: '/pacientes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPortalPacienteRoute = AppPortalPacienteRouteImport.update({
+  id: '/portal-paciente',
+  path: '/portal-paciente',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -101,14 +167,25 @@ export interface FileRoutesByFullPath {
   '/caracteristicas': typeof CaracteristicasRoute
   '/demostracion': typeof DemostracionRoute
   '/planes': typeof PlanesRoute
+  '/registro': typeof RegistroRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/analitica': typeof AppAnaliticaRoute
   '/app/clinica': typeof AppClinicaRoute
   '/app/comunicacion': typeof AppComunicacionRoute
   '/app/configuracion': typeof AppConfiguracionRoute
-  '/app/facturacion': typeof AppFacturacionRoute
+  '/app/documentos': typeof AppDocumentosRoute
+  '/app/equipo': typeof AppEquipoRoute
+  '/app/estudios-diagnostico': typeof AppEstudiosDiagnosticoRoute
+  '/app/finanzas': typeof AppFinanzasRoute
+  '/app/ia-esther': typeof AppIaEstherRoute
+  '/app/integraciones': typeof AppIntegracionesRoute
+  '/app/inventario': typeof AppInventarioRoute
+  '/app/laboratorio': typeof AppLaboratorioRoute
   '/app/marketing': typeof AppMarketingRoute
+  '/app/multiempresa': typeof AppMultiempresaRoute
+  '/app/notificaciones': typeof AppNotificacionesRoute
   '/app/pacientes': typeof AppPacientesRoute
+  '/app/portal-paciente': typeof AppPortalPacienteRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
@@ -116,14 +193,25 @@ export interface FileRoutesByTo {
   '/caracteristicas': typeof CaracteristicasRoute
   '/demostracion': typeof DemostracionRoute
   '/planes': typeof PlanesRoute
+  '/registro': typeof RegistroRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/analitica': typeof AppAnaliticaRoute
   '/app/clinica': typeof AppClinicaRoute
   '/app/comunicacion': typeof AppComunicacionRoute
   '/app/configuracion': typeof AppConfiguracionRoute
-  '/app/facturacion': typeof AppFacturacionRoute
+  '/app/documentos': typeof AppDocumentosRoute
+  '/app/equipo': typeof AppEquipoRoute
+  '/app/estudios-diagnostico': typeof AppEstudiosDiagnosticoRoute
+  '/app/finanzas': typeof AppFinanzasRoute
+  '/app/ia-esther': typeof AppIaEstherRoute
+  '/app/integraciones': typeof AppIntegracionesRoute
+  '/app/inventario': typeof AppInventarioRoute
+  '/app/laboratorio': typeof AppLaboratorioRoute
   '/app/marketing': typeof AppMarketingRoute
+  '/app/multiempresa': typeof AppMultiempresaRoute
+  '/app/notificaciones': typeof AppNotificacionesRoute
   '/app/pacientes': typeof AppPacientesRoute
+  '/app/portal-paciente': typeof AppPortalPacienteRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
@@ -133,14 +221,25 @@ export interface FileRoutesById {
   '/caracteristicas': typeof CaracteristicasRoute
   '/demostracion': typeof DemostracionRoute
   '/planes': typeof PlanesRoute
+  '/registro': typeof RegistroRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/analitica': typeof AppAnaliticaRoute
   '/app/clinica': typeof AppClinicaRoute
   '/app/comunicacion': typeof AppComunicacionRoute
   '/app/configuracion': typeof AppConfiguracionRoute
-  '/app/facturacion': typeof AppFacturacionRoute
+  '/app/documentos': typeof AppDocumentosRoute
+  '/app/equipo': typeof AppEquipoRoute
+  '/app/estudios-diagnostico': typeof AppEstudiosDiagnosticoRoute
+  '/app/finanzas': typeof AppFinanzasRoute
+  '/app/ia-esther': typeof AppIaEstherRoute
+  '/app/integraciones': typeof AppIntegracionesRoute
+  '/app/inventario': typeof AppInventarioRoute
+  '/app/laboratorio': typeof AppLaboratorioRoute
   '/app/marketing': typeof AppMarketingRoute
+  '/app/multiempresa': typeof AppMultiempresaRoute
+  '/app/notificaciones': typeof AppNotificacionesRoute
   '/app/pacientes': typeof AppPacientesRoute
+  '/app/portal-paciente': typeof AppPortalPacienteRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
@@ -151,14 +250,25 @@ export interface FileRouteTypes {
     | '/caracteristicas'
     | '/demostracion'
     | '/planes'
+    | '/registro'
     | '/app/agenda'
     | '/app/analitica'
     | '/app/clinica'
     | '/app/comunicacion'
     | '/app/configuracion'
-    | '/app/facturacion'
+    | '/app/documentos'
+    | '/app/equipo'
+    | '/app/estudios-diagnostico'
+    | '/app/finanzas'
+    | '/app/ia-esther'
+    | '/app/integraciones'
+    | '/app/inventario'
+    | '/app/laboratorio'
     | '/app/marketing'
+    | '/app/multiempresa'
+    | '/app/notificaciones'
     | '/app/pacientes'
+    | '/app/portal-paciente'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -166,14 +276,25 @@ export interface FileRouteTypes {
     | '/caracteristicas'
     | '/demostracion'
     | '/planes'
+    | '/registro'
     | '/app/agenda'
     | '/app/analitica'
     | '/app/clinica'
     | '/app/comunicacion'
     | '/app/configuracion'
-    | '/app/facturacion'
+    | '/app/documentos'
+    | '/app/equipo'
+    | '/app/estudios-diagnostico'
+    | '/app/finanzas'
+    | '/app/ia-esther'
+    | '/app/integraciones'
+    | '/app/inventario'
+    | '/app/laboratorio'
     | '/app/marketing'
+    | '/app/multiempresa'
+    | '/app/notificaciones'
     | '/app/pacientes'
+    | '/app/portal-paciente'
     | '/app'
   id:
     | '__root__'
@@ -182,14 +303,25 @@ export interface FileRouteTypes {
     | '/caracteristicas'
     | '/demostracion'
     | '/planes'
+    | '/registro'
     | '/app/agenda'
     | '/app/analitica'
     | '/app/clinica'
     | '/app/comunicacion'
     | '/app/configuracion'
-    | '/app/facturacion'
+    | '/app/documentos'
+    | '/app/equipo'
+    | '/app/estudios-diagnostico'
+    | '/app/finanzas'
+    | '/app/ia-esther'
+    | '/app/integraciones'
+    | '/app/inventario'
+    | '/app/laboratorio'
     | '/app/marketing'
+    | '/app/multiempresa'
+    | '/app/notificaciones'
     | '/app/pacientes'
+    | '/app/portal-paciente'
     | '/app/'
   fileRoutesById: FileRoutesById
 }
@@ -199,6 +331,7 @@ export interface RootRouteChildren {
   CaracteristicasRoute: typeof CaracteristicasRoute
   DemostracionRoute: typeof DemostracionRoute
   PlanesRoute: typeof PlanesRoute
+  RegistroRoute: typeof RegistroRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -236,6 +369,13 @@ declare module '@tanstack/react-router' {
       path: '/planes'
       fullPath: '/planes'
       preLoaderRoute: typeof PlanesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registro': {
+      id: '/registro'
+      path: '/registro'
+      fullPath: '/registro'
+      preLoaderRoute: typeof RegistroRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -280,11 +420,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConfiguracionRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/facturacion': {
-      id: '/app/facturacion'
-      path: '/facturacion'
-      fullPath: '/app/facturacion'
-      preLoaderRoute: typeof AppFacturacionRouteImport
+    '/app/documentos': {
+      id: '/app/documentos'
+      path: '/documentos'
+      fullPath: '/app/documentos'
+      preLoaderRoute: typeof AppDocumentosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/equipo': {
+      id: '/app/equipo'
+      path: '/equipo'
+      fullPath: '/app/equipo'
+      preLoaderRoute: typeof AppEquipoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/estudios-diagnostico': {
+      id: '/app/estudios-diagnostico'
+      path: '/estudios-diagnostico'
+      fullPath: '/app/estudios-diagnostico'
+      preLoaderRoute: typeof AppEstudiosDiagnosticoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/finanzas': {
+      id: '/app/finanzas'
+      path: '/finanzas'
+      fullPath: '/app/finanzas'
+      preLoaderRoute: typeof AppFinanzasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/ia-esther': {
+      id: '/app/ia-esther'
+      path: '/ia-esther'
+      fullPath: '/app/ia-esther'
+      preLoaderRoute: typeof AppIaEstherRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/integraciones': {
+      id: '/app/integraciones'
+      path: '/integraciones'
+      fullPath: '/app/integraciones'
+      preLoaderRoute: typeof AppIntegracionesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/inventario': {
+      id: '/app/inventario'
+      path: '/inventario'
+      fullPath: '/app/inventario'
+      preLoaderRoute: typeof AppInventarioRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/laboratorio': {
+      id: '/app/laboratorio'
+      path: '/laboratorio'
+      fullPath: '/app/laboratorio'
+      preLoaderRoute: typeof AppLaboratorioRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/marketing': {
@@ -294,11 +483,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMarketingRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/multiempresa': {
+      id: '/app/multiempresa'
+      path: '/multiempresa'
+      fullPath: '/app/multiempresa'
+      preLoaderRoute: typeof AppMultiempresaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/notificaciones': {
+      id: '/app/notificaciones'
+      path: '/notificaciones'
+      fullPath: '/app/notificaciones'
+      preLoaderRoute: typeof AppNotificacionesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/pacientes': {
       id: '/app/pacientes'
       path: '/pacientes'
       fullPath: '/app/pacientes'
       preLoaderRoute: typeof AppPacientesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/portal-paciente': {
+      id: '/app/portal-paciente'
+      path: '/portal-paciente'
+      fullPath: '/app/portal-paciente'
+      preLoaderRoute: typeof AppPortalPacienteRouteImport
       parentRoute: typeof AppRoute
     }
   }
@@ -310,9 +520,19 @@ interface AppRouteChildren {
   AppClinicaRoute: typeof AppClinicaRoute
   AppComunicacionRoute: typeof AppComunicacionRoute
   AppConfiguracionRoute: typeof AppConfiguracionRoute
-  AppFacturacionRoute: typeof AppFacturacionRoute
+  AppDocumentosRoute: typeof AppDocumentosRoute
+  AppEquipoRoute: typeof AppEquipoRoute
+  AppEstudiosDiagnosticoRoute: typeof AppEstudiosDiagnosticoRoute
+  AppFinanzasRoute: typeof AppFinanzasRoute
+  AppIaEstherRoute: typeof AppIaEstherRoute
+  AppIntegracionesRoute: typeof AppIntegracionesRoute
+  AppInventarioRoute: typeof AppInventarioRoute
+  AppLaboratorioRoute: typeof AppLaboratorioRoute
   AppMarketingRoute: typeof AppMarketingRoute
+  AppMultiempresaRoute: typeof AppMultiempresaRoute
+  AppNotificacionesRoute: typeof AppNotificacionesRoute
   AppPacientesRoute: typeof AppPacientesRoute
+  AppPortalPacienteRoute: typeof AppPortalPacienteRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
@@ -322,9 +542,19 @@ const AppRouteChildren: AppRouteChildren = {
   AppClinicaRoute: AppClinicaRoute,
   AppComunicacionRoute: AppComunicacionRoute,
   AppConfiguracionRoute: AppConfiguracionRoute,
-  AppFacturacionRoute: AppFacturacionRoute,
+  AppDocumentosRoute: AppDocumentosRoute,
+  AppEquipoRoute: AppEquipoRoute,
+  AppEstudiosDiagnosticoRoute: AppEstudiosDiagnosticoRoute,
+  AppFinanzasRoute: AppFinanzasRoute,
+  AppIaEstherRoute: AppIaEstherRoute,
+  AppIntegracionesRoute: AppIntegracionesRoute,
+  AppInventarioRoute: AppInventarioRoute,
+  AppLaboratorioRoute: AppLaboratorioRoute,
   AppMarketingRoute: AppMarketingRoute,
+  AppMultiempresaRoute: AppMultiempresaRoute,
+  AppNotificacionesRoute: AppNotificacionesRoute,
   AppPacientesRoute: AppPacientesRoute,
+  AppPortalPacienteRoute: AppPortalPacienteRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
@@ -336,6 +566,7 @@ const rootRouteChildren: RootRouteChildren = {
   CaracteristicasRoute: CaracteristicasRoute,
   DemostracionRoute: DemostracionRoute,
   PlanesRoute: PlanesRoute,
+  RegistroRoute: RegistroRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,15 +1,18 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
-import type { ReactNode } from "react";
+import { ArrowUp, Menu, MessageCircle } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import toothLogo from "@/assets/tooth-logo.png";
 
+/* "Demostración" ya NO va acá — antes duplicaba exactamente lo mismo que el
+   botón violeta "Solicitar demostración" del header (mismo destino,
+   /demostracion). El link de solicitar demo ahora vive solo en el botón,
+   no repetido en el nav. */
 const nav = [
   { to: "/", label: "Inicio" },
   { to: "/caracteristicas", label: "Características" },
   { to: "/planes", label: "Planes y precios" },
-  { to: "/demostracion", label: "Demostración" },
 ];
 
 export function Logo({ inverted = false }: { inverted?: boolean }) {
@@ -52,11 +55,38 @@ function HomeNavLink({
   );
 }
 
+/* Botón flotante "volver arriba": invisible mientras estás cerca del tope,
+   aparece con un fade suave al bajar, lleva de nuevo al inicio con scroll
+   suave. Vive acá para aparecer en todas las páginas públicas, no solo
+   en el Hero. */
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 480);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <button
+      type="button"
+      aria-label="Volver arriba"
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className={`fixed bottom-6 right-6 z-40 flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lift transition-all duration-300 hover:bg-primary/90 ${
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
+      }`}
+    >
+      <ArrowUp className="size-5" />
+    </button>
+  );
+}
+
 export function PublicLayout({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-sky-gradient">
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Logo />
@@ -87,7 +117,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
           </nav>
           <div className="hidden items-center gap-2 md:flex">
             <Button asChild variant="ghost" size="sm">
-              <Link to="/app">Ver el panel</Link>
+              <Link to="/registro">Probar gratis</Link>
             </Button>
             <Button asChild size="sm">
               <Link to="/demostracion">Solicitar demostración</Link>
@@ -118,8 +148,8 @@ export function PublicLayout({ children }: { children: ReactNode }) {
                     </Link>
                   ),
                 )}
-                <Link to="/app" className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted">
-                  Ver el panel
+                <Link to="/registro" className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted">
+                  Probar gratis
                 </Link>
                 <Button asChild className="mt-4">
                   <Link to="/demostracion">Solicitar demostración</Link>
@@ -129,8 +159,10 @@ export function PublicLayout({ children }: { children: ReactNode }) {
           </Sheet>
         </div>
       </header>
-      <main>{children}</main>
-      <footer className="mt-24 border-t border-border bg-muted/40">
+      <main>
+        {children}
+      </main>
+      <footer className="mt-24 border-t border-border bg-accent/50">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
           <div className="md:col-span-2">
             <Logo />
@@ -152,7 +184,11 @@ export function PublicLayout({ children }: { children: ReactNode }) {
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               <li><Link to="/demostracion" className="hover:text-foreground">Solicitar demostración</Link></li>
               <li>soporte@cloudesther.com</li>
-              <li>+34 900 123 456</li>
+              {/* TODO: número de WhatsApp real — este es un placeholder, reemplazar
+                  cuando esté dado de alta y actualizar también el href de wa.me */}
+              <li className="flex items-center gap-1.5">
+                <MessageCircle className="size-4" /> +54 9 11 0000 0000
+              </li>
             </ul>
           </div>
         </div>
@@ -160,6 +196,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
           © 2026 Cloud Esther. Todos los derechos reservados.
         </div>
       </footer>
+      <ScrollToTop />
     </div>
   );
 }

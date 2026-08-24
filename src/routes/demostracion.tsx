@@ -17,17 +17,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { modules } from "@/data/demo";
+import demoHero from "@/assets/demo-hero.png";
 
 export const Route = createFileRoute("/demostracion")({
   head: () => ({
     meta: [
-      { title: "Solicitar demostración | DentalisPro" },
+      { title: "Solicitar demostración | Cloud Esther" },
       {
         name: "description",
         content:
-          "Agenda una demostración personalizada de DentalisPro con tus sucursales, equipo y módulos de interés. Respondemos en menos de 24 horas laborables.",
+          "Agenda una demostración personalizada de Cloud Esther con tus sucursales, equipo y módulos de interés. Respondemos en menos de 24 horas laborables.",
       },
-      { property: "og:title", content: "Solicitar demostración | DentalisPro" },
+      { property: "og:title", content: "Solicitar demostración | Cloud Esther" },
       {
         property: "og:description",
         content: "Demostración guiada para clínicas odontológicas y grupos multisucursal.",
@@ -82,15 +83,23 @@ function DemoRequest() {
 
   return (
     <PublicLayout>
-      <section className="bg-soft-gradient">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-          <h1 className="max-w-3xl text-4xl font-bold sm:text-5xl">
-            Solicita una demostración para tu clínica
-          </h1>
-          <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-            Cuéntanos cómo trabaja tu clínica y preparamos una sesión de 30 minutos con tu caso real:
-            sucursales, especialidades, agenda y módulos de interés.
-          </p>
+      <section className="bg-gradient-to-br from-[#1e1b4b] via-[#4c1d95] to-[#7c3aed]">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-14 sm:px-6 lg:grid-cols-2">
+          <div>
+            <h1 className="max-w-3xl text-4xl font-bold text-white sm:text-5xl">
+              Hablá con un especialista antes de empezar
+            </h1>
+            <p className="mt-5 max-w-2xl text-lg text-white/75">
+              Contanos cómo trabaja tu clínica y un especialista te contacta para preparar una
+              sesión de 30 minutos con tu caso real: sucursales, especialidades, agenda y módulos
+              de interés.
+            </p>
+          </div>
+          <img
+            src={demoHero}
+            alt="Agenda una demostración de Cloud Esther"
+            className="ml-auto mr-0 hidden max-w-xl animate-avatar-float lg:block"
+          />
         </div>
       </section>
 
@@ -104,7 +113,7 @@ function DemoRequest() {
                 </span>
                 <h2 className="mt-5 text-2xl font-bold">¡Solicitud recibida!</h2>
                 <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                  Un especialista en implantación de DentalisPro te escribirá en menos de 24 horas
+                  Un especialista en implantación de Cloud Esther te escribirá en menos de 24 horas
                   laborables para coordinar la demostración.
                 </p>
                 <Button className="mt-6" variant="outline" onClick={() => setSent(false)}>
@@ -127,7 +136,7 @@ function DemoRequest() {
                       <Input name="email" type="email" placeholder="direccion@clinica.com" aria-invalid={!!errors["email"]} />
                     </Field>
                     <Field label="Teléfono" error={errors["phone"]}>
-                      <Input name="phone" placeholder="+34 600 000 000" aria-invalid={!!errors["phone"]} />
+                      <Input name="phone" placeholder="+54 9 11 0000 0000" aria-invalid={!!errors["phone"]} />
                     </Field>
                     <Field label="Número de sucursales">
                       <Select value={branchCount} onValueChange={setBranchCount}>
@@ -218,7 +227,7 @@ function DemoRequest() {
               <p className="mt-1 text-sm text-muted-foreground">
                 Llámanos de lunes a viernes de 9:00 a 19:00.
               </p>
-              <p className="mt-3 font-display text-lg font-bold text-primary">+34 900 123 456</p>
+              <p className="mt-3 font-display text-lg font-bold text-primary">+54 9 11 0000 0000</p>
             </CardContent>
           </Card>
         </aside>
