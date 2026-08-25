@@ -12,6 +12,7 @@ import {
   Search,
   ShieldCheck,
   Truck,
+  UploadCloud,
   User,
   X,
 } from "lucide-react";
@@ -19,10 +20,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { PageHeader } from "@/components/app/DashboardShell";
-import { EmptyState, StatCard } from "@/components/app/ui-kit";
+import { StatCard } from "@/components/app/ui-kit";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -40,7 +46,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
 export const Route = createFileRoute("/app/laboratorio")({
@@ -52,7 +63,6 @@ const cardStyle =
 
 /* =========================================================
    DATOS DEMO
-   Datos ficticios para mostrar la estructura.
 ========================================================= */
 
 const demoPatient = {
@@ -120,8 +130,68 @@ function LaboratorioPage() {
   const [showLaboratories, setShowLaboratories] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
   const [showAudit, setShowAudit] = useState(false);
+  const [showDocuments, setShowDocuments] = useState(false);
+  const [showLaboratoryForm, setShowLaboratoryForm] = useState(false);
+  const [laboratoryEditing, setLaboratoryEditing] = useState(false);
+  const [laboratory, setLaboratory] = useState(demoLaboratory);
+  const [laboratoryForm, setLaboratoryForm] = useState({
+    name: laboratory.name,
+    contact: laboratory.contact,
+    phone: laboratory.phone,
+    email: laboratory.email,
+    address: laboratory.address,
+    status: "Activo",
+  });
 
   const [search, setSearch] = useState("");
+
+  function openNewLaboratory() {
+    setLaboratoryEditing(false);
+    setLaboratoryForm({
+      name: "",
+      contact: "",
+      phone: "",
+      email: "",
+      address: "",
+      status: "Activo",
+    });
+    setShowLaboratoryForm(true);
+  }
+
+  function openEditLaboratory() {
+    setLaboratoryEditing(true);
+    setLaboratoryForm({
+      name: laboratory.name,
+      contact: laboratory.contact,
+      phone: laboratory.phone,
+      email: laboratory.email,
+      address: laboratory.address,
+      status: "Activo",
+    });
+    setShowLaboratoryForm(true);
+  }
+
+  function saveLaboratory() {
+    if (!laboratoryForm.name.trim() || !laboratoryForm.contact.trim()) {
+      toast.error("Completá el nombre y el contacto del laboratorio.");
+      return;
+    }
+
+    setLaboratory({
+      name: laboratoryForm.name.trim(),
+      contact: laboratoryForm.contact.trim(),
+      phone: laboratoryForm.phone.trim(),
+      email: laboratoryForm.email.trim(),
+      address: laboratoryForm.address.trim(),
+    });
+
+    toast.success(
+      laboratoryEditing
+        ? "Laboratorio actualizado correctamente."
+        : "Laboratorio agregado correctamente.",
+    );
+    setShowLaboratoryForm(false);
+  }
 
   return (
     <>
@@ -164,7 +234,11 @@ function LaboratorioPage() {
       ===================================================== */}
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Pedidos recibidos" value="1" icon={Package} />
+        <StatCard
+          label="Pedidos recibidos"
+          value="1"
+          icon={Package}
+        />
 
         <StatCard
           label="En proceso"
@@ -208,9 +282,15 @@ function LaboratorioPage() {
       </Card>
 
       <Tabs defaultValue="pedidos" className="mt-6">
-        <TabsList>
-          <TabsTrigger value="pedidos">Pedidos</TabsTrigger>
-          <TabsTrigger value="estado">Estado en tiempo real</TabsTrigger>
+        <TabsList className="flex w-full flex-wrap justify-start">
+          <TabsTrigger value="pedidos">
+            Pedidos
+          </TabsTrigger>
+
+          <TabsTrigger value="estado">
+            Estado en tiempo real
+          </TabsTrigger>
+
           <TabsTrigger value="laboratorios">
             Listado por laboratorio
           </TabsTrigger>
@@ -222,121 +302,117 @@ function LaboratorioPage() {
 
         <TabsContent value="pedidos" className="mt-4">
           <Card className={cardStyle}>
-            <CardContent className="p-6">
-              <div className="space-y-5">
-                <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-                  <div>
-                    <h3 className="font-semibold">
-                      Pedido #{demoOrder.id}
-                    </h3>
-
-                    <p className="text-sm text-muted-foreground">
-                      Creado el {demoOrder.requested}
-                    </p>
-                  </div>
-
-                  <Badge variant="secondary">
-                    {demoOrder.status}
-                  </Badge>
-                </div>
-
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  <Info
-                    label="Paciente"
-                    value={demoOrder.patient}
-                    icon={User}
-                  />
-
-                  <Info
-                    label="Profesional"
-                    value={demoOrder.professional}
-                    icon={User}
-                  />
-
-                  <Info
-                    label="Tratamiento"
-                    value={demoOrder.treatment}
-                    icon={FlaskConical}
-                  />
-
-                  <Info
-                    label="Pieza"
-                    value={demoOrder.teeth}
-                  />
-
-                  <Info
-                    label="Laboratorio"
-                    value={demoOrder.laboratory}
-                    icon={Building2}
-                  />
-
-                  <Info
-                    label="Entrega estimada"
-                    value={demoOrder.estimated}
-                    icon={Truck}
-                  />
-                </div>
-
-                <div className="rounded-xl border p-4">
-                  <p className="text-sm font-medium">
-                    Observaciones
-                  </p>
+            <CardHeader className="pb-3">
+              <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+                <div>
+                  <CardTitle className="text-base">
+                    Pedido #{demoOrder.id}
+                  </CardTitle>
 
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {demoOrder.observations}
+                    Creado el {demoOrder.requested}
                   </p>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <Info
-                    label="Costo total"
-                    value={demoOrder.cost}
-                  />
+                <Badge variant="secondary">
+                  {demoOrder.status}
+                </Badge>
+              </div>
+            </CardHeader>
 
-                  <Info
-                    label="Pagado"
-                    value={demoOrder.paid}
-                  />
+            <CardContent className="space-y-5">
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                <Info
+                  label="Paciente"
+                  value={demoOrder.patient}
+                  icon={User}
+                />
 
-                  <Info
-                    label="Saldo"
-                    value={demoOrder.remaining}
-                  />
-                </div>
+                <Info
+                  label="Profesional"
+                  value={demoOrder.professional}
+                  icon={User}
+                />
 
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    className="gap-2"
-                    onClick={() => setShowOrder(true)}
-                  >
-                    <Eye className="size-4" />
-                    Ver pedido
-                  </Button>
+                <Info
+                  label="Tratamiento"
+                  value={demoOrder.treatment}
+                  icon={FlaskConical}
+                />
 
-                  <Button
-                    variant="outline"
-                    className="gap-2"
-                    onClick={() =>
-                      toast.info("Editor del pedido de laboratorio")
-                    }
-                  >
-                    <Pencil className="size-4" />
-                    Editar
-                  </Button>
+                <Info
+                  label="Pieza"
+                  value={demoOrder.teeth}
+                />
 
-                  <Button
-                    variant="outline"
-                    className="gap-2"
-                    onClick={() =>
-                      toast.success(
-                        "Documento adjunto al pedido.",
-                      )
-                    }
-                  >
-                    <FileText className="size-4" />
-                    Adjuntar documentación
-                  </Button>
-                </div>
+                <Info
+                  label="Laboratorio"
+                  value={demoOrder.laboratory}
+                  icon={Building2}
+                />
+
+                <Info
+                  label="Entrega estimada"
+                  value={demoOrder.estimated}
+                  icon={Truck}
+                />
+              </div>
+
+              <div className="rounded-xl border bg-background/60 p-4">
+                <p className="text-sm font-medium">
+                  Observaciones
+                </p>
+
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  {demoOrder.observations}
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                <Info
+                  label="Costo total"
+                  value={demoOrder.cost}
+                />
+
+                <Info
+                  label="Pagado"
+                  value={demoOrder.paid}
+                />
+
+                <Info
+                  label="Saldo"
+                  value={demoOrder.remaining}
+                />
+              </div>
+
+              <div className="flex flex-wrap gap-2 border-t pt-4">
+                <Button
+                  className="gap-2"
+                  onClick={() => setShowOrder(true)}
+                >
+                  <Eye className="size-4" />
+                  Ver pedido
+                </Button>
+
+                <Button
+                  variant="outline"
+                  className="gap-2"
+                  onClick={() =>
+                    toast.info("Editor del pedido de laboratorio")
+                  }
+                >
+                  <Pencil className="size-4" />
+                  Editar
+                </Button>
+
+                <Button
+                  variant="outline"
+                  className="gap-2"
+                  onClick={() => setShowDocuments(true)}
+                >
+                  <FileText className="size-4" />
+                  Adjuntar documentación
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -411,7 +487,7 @@ function LaboratorioPage() {
           <Card className={cardStyle}>
             <CardContent className="p-6">
               <div className="space-y-5">
-                <div className="flex justify-between gap-3">
+                <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
                   <div>
                     <h3 className="font-semibold">
                       Laboratorios registrados
@@ -424,44 +500,44 @@ function LaboratorioPage() {
 
                   <Button
                     className="gap-2"
-                    onClick={() =>
-                      toast.info("Formulario de alta de laboratorio")
-                    }
+                    onClick={openNewLaboratory}
                   >
                     <Plus className="size-4" />
                     Agregar
                   </Button>
                 </div>
 
-                <div className="rounded-xl border p-4">
-                  <div className="flex flex-col justify-between gap-4 sm:flex-row">
+                <div className="rounded-xl border bg-background/60 p-4">
+                  <div className="flex flex-col justify-between gap-4 lg:flex-row">
                     <div className="flex gap-3">
-                      <Building2 className="mt-1 size-5 text-primary" />
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <Building2 className="size-5" />
+                      </div>
 
                       <div>
                         <p className="font-semibold">
-                          {demoLaboratory.name}
+                          {laboratory.name}
+                        </p>
+
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          Contacto: {laboratory.contact}
                         </p>
 
                         <p className="text-sm text-muted-foreground">
-                          Contacto: {demoLaboratory.contact}
+                          {laboratory.phone}
                         </p>
 
                         <p className="text-sm text-muted-foreground">
-                          {demoLaboratory.phone}
+                          {laboratory.email}
                         </p>
 
                         <p className="text-sm text-muted-foreground">
-                          {demoLaboratory.email}
-                        </p>
-
-                        <p className="text-sm text-muted-foreground">
-                          {demoLaboratory.address}
+                          {laboratory.address}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex items-start gap-2">
                       <Badge variant="secondary">
                         Activo
                       </Badge>
@@ -470,9 +546,7 @@ function LaboratorioPage() {
                         variant="outline"
                         size="icon"
                         title="Editar laboratorio"
-                        onClick={() =>
-                          toast.info("Editar laboratorio")
-                        }
+                        onClick={openEditLaboratory}
                       >
                         <Pencil className="size-4" />
                       </Button>
@@ -489,10 +563,15 @@ function LaboratorioPage() {
           MODAL — NUEVO PEDIDO
       ===================================================== */}
 
-      <Dialog open={showNewOrder} onOpenChange={setShowNewOrder}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Nuevo pedido de laboratorio</DialogTitle>
+      <Dialog
+        open={showNewOrder}
+        onOpenChange={setShowNewOrder}
+      >
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+          <DialogHeader className="pr-10">
+            <DialogTitle>
+              Nuevo pedido de laboratorio
+            </DialogTitle>
 
             <DialogDescription>
               Asociá el pedido a un paciente, tratamiento y laboratorio.
@@ -573,13 +652,19 @@ function LaboratorioPage() {
             <div className="space-y-1.5">
               <Label>Fecha de solicitud</Label>
 
-              <Input type="date" defaultValue="2026-08-21" />
+              <Input
+                type="date"
+                defaultValue="2026-08-21"
+              />
             </div>
 
             <div className="space-y-1.5">
               <Label>Entrega estimada</Label>
 
-              <Input type="date" defaultValue="2026-08-28" />
+              <Input
+                type="date"
+                defaultValue="2026-08-28"
+              />
             </div>
 
             <div className="space-y-1.5">
@@ -591,8 +676,13 @@ function LaboratorioPage() {
                 </SelectTrigger>
 
                 <SelectContent>
-                  <SelectItem value="normal">Normal</SelectItem>
-                  <SelectItem value="urgente">Urgente</SelectItem>
+                  <SelectItem value="normal">
+                    Normal
+                  </SelectItem>
+
+                  <SelectItem value="urgente">
+                    Urgente
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -640,12 +730,21 @@ function LaboratorioPage() {
           MODAL — VER PEDIDO
       ===================================================== */}
 
-      <Dialog open={showOrder} onOpenChange={setShowOrder}>
-        <DialogContent className="max-w-3xl">
-          <DialogHeader>
-            <DialogTitle>
-              Pedido #{demoOrder.id}
-            </DialogTitle>
+      <Dialog
+        open={showOrder}
+        onOpenChange={setShowOrder}
+      >
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
+          <DialogHeader className="pr-10">
+            <div className="flex flex-wrap items-center gap-2">
+              <DialogTitle>
+                Pedido #{demoOrder.id}
+              </DialogTitle>
+
+              <Badge variant="secondary">
+                {demoOrder.status}
+              </Badge>
+            </div>
 
             <DialogDescription>
               Detalle completo del pedido de laboratorio.
@@ -662,25 +761,39 @@ function LaboratorioPage() {
             <X className="size-4" />
           </Button>
 
-          <div className="space-y-5">
-            <div className="flex justify-between gap-4 rounded-xl border p-4">
-              <div>
-                <p className="font-semibold">
-                  {demoOrder.patient}
-                </p>
+          <div className="space-y-4">
+            {/* PACIENTE */}
 
-                <p className="text-sm text-muted-foreground">
-                  DNI: {demoPatient.document}
-                </p>
+            <div className="rounded-xl border bg-primary/5 p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <User className="size-5" />
+                </div>
+
+                <div>
+                  <p className="font-semibold">
+                    {demoOrder.patient}
+                  </p>
+
+                  <p className="text-sm text-muted-foreground">
+                    DNI: {demoPatient.document}
+                  </p>
+                </div>
               </div>
-
-              <Badge>{demoOrder.status}</Badge>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Info label="Tratamiento" value={demoOrder.treatment} />
+            {/* INFORMACIÓN */}
 
-              <Info label="Pieza" value={demoOrder.teeth} />
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Info
+                label="Tratamiento"
+                value={demoOrder.treatment}
+              />
+
+              <Info
+                label="Pieza"
+                value={demoOrder.teeth}
+              />
 
               <Info
                 label="Profesional"
@@ -701,42 +814,277 @@ function LaboratorioPage() {
                 label="Entrega estimada"
                 value={demoOrder.estimated}
               />
+
+              <Info
+                label="Prioridad"
+                value={demoOrder.priority}
+              />
+
+              <Info
+                label="Costo total"
+                value={demoOrder.cost}
+              />
             </div>
+
+            {/* ESTADO ECONÓMICO */}
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="rounded-xl border p-3">
+                <p className="text-xs text-muted-foreground">
+                  Costo total
+                </p>
+
+                <p className="mt-1 font-semibold">
+                  {demoOrder.cost}
+                </p>
+              </div>
+
+              <div className="rounded-xl border p-3">
+                <p className="text-xs text-muted-foreground">
+                  Pagado
+                </p>
+
+                <p className="mt-1 font-semibold">
+                  {demoOrder.paid}
+                </p>
+              </div>
+
+              <div className="rounded-xl border p-3">
+                <p className="text-xs text-muted-foreground">
+                  Saldo pendiente
+                </p>
+
+                <p className="mt-1 font-semibold">
+                  {demoOrder.remaining}
+                </p>
+              </div>
+            </div>
+
+            {/* OBSERVACIONES */}
 
             <div className="rounded-xl border p-4">
               <p className="font-medium">
                 Observaciones
               </p>
 
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                 {demoOrder.observations}
               </p>
             </div>
 
+            {/* DOCUMENTACIÓN */}
+
             <div className="rounded-xl border p-4">
-              <p className="font-medium">
-                Documentación
-              </p>
+              <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+                <div>
+                  <p className="font-medium">
+                    Documentación adjunta
+                  </p>
 
-              <div className="mt-3 flex flex-wrap gap-2">
-                <Badge variant="secondary">
-                  Fotografía clínica
-                </Badge>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Archivos relacionados con este pedido.
+                  </p>
+                </div>
 
-                <Badge variant="secondary">
-                  Impresión digital
-                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-2"
+                  onClick={() => {
+                    setShowOrder(false);
+                    setShowDocuments(true);
+                  }}
+                >
+                  <Plus className="size-4" />
+                  Adjuntar
+                </Button>
+              </div>
 
-                <Badge variant="secondary">
-                  Orden odontológica
-                </Badge>
+              <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                <DocumentItem
+                  name="Fotografía clínica"
+                  type="JPG"
+                />
+
+                <DocumentItem
+                  name="Impresión digital"
+                  type="STL"
+                />
+
+                <DocumentItem
+                  name="Orden odontológica"
+                  type="PDF"
+                />
               </div>
             </div>
           </div>
 
           <DialogFooter>
-            <Button onClick={() => setShowOrder(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowOrder(false)}
+            >
               Cerrar
+            </Button>
+
+            <Button
+              className="gap-2"
+              onClick={() => {
+                setShowOrder(false);
+                setShowDocuments(true);
+              }}
+            >
+              <FileText className="size-4" />
+              Adjuntar documentación
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* =====================================================
+          MODAL — ADJUNTAR DOCUMENTACIÓN
+      ===================================================== */}
+
+      <Dialog
+        open={showDocuments}
+        onOpenChange={setShowDocuments}
+      >
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
+          <DialogHeader className="pr-10">
+            <DialogTitle>
+              Adjuntar documentación
+            </DialogTitle>
+
+            <DialogDescription>
+              Agregá archivos relacionados con el pedido #{demoOrder.id}.
+            </DialogDescription>
+          </DialogHeader>
+
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute right-4 top-4"
+            title="Cerrar"
+            onClick={() => setShowDocuments(false)}
+          >
+            <X className="size-4" />
+          </Button>
+
+          <div className="space-y-5">
+            <div className="rounded-xl border border-dashed border-primary/40 bg-primary/5 p-8 text-center">
+              <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <UploadCloud className="size-7" />
+              </div>
+
+              <p className="mt-4 font-semibold">
+                Subir documentación
+              </p>
+
+              <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
+                Arrastrá los archivos aquí o seleccioná documentos desde tu
+                computadora.
+              </p>
+
+              <Button
+                variant="outline"
+                className="mt-4 gap-2"
+                onClick={() =>
+                  toast.info(
+                    "Selector de archivos preparado para conectar con almacenamiento.",
+                  )
+                }
+              >
+                <UploadCloud className="size-4" />
+                Seleccionar archivos
+              </Button>
+
+              <p className="mt-3 text-xs text-muted-foreground">
+                PDF, JPG, PNG, DICOM, STL y otros archivos clínicos.
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label>
+                Tipo de documentación
+              </Label>
+
+              <Select defaultValue="estudio">
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectItem value="estudio">
+                    Estudio / imagen
+                  </SelectItem>
+
+                  <SelectItem value="orden">
+                    Orden odontológica
+                  </SelectItem>
+
+                  <SelectItem value="impresion">
+                    Impresión digital
+                  </SelectItem>
+
+                  <SelectItem value="fotografia">
+                    Fotografía clínica
+                  </SelectItem>
+
+                  <SelectItem value="otro">
+                    Otro documento
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label>
+                Descripción
+              </Label>
+
+              <Textarea
+                rows={3}
+                placeholder="Descripción o indicaciones relacionadas con el archivo..."
+              />
+            </div>
+
+            <div className="rounded-xl border bg-muted/30 p-4">
+              <div className="flex items-start gap-3">
+                <FileText className="mt-0.5 size-5 text-primary" />
+
+                <div>
+                  <p className="text-sm font-medium">
+                    Documentación existente
+                  </p>
+
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    El pedido ya cuenta con 3 documentos asociados.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowDocuments(false)}
+            >
+              Cancelar
+            </Button>
+
+            <Button
+              className="gap-2"
+              onClick={() => {
+                setShowDocuments(false);
+
+                toast.success(
+                  "Documentación adjunta al pedido.",
+                );
+              }}
+            >
+              <FileText className="size-4" />
+              Adjuntar documentación
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -750,8 +1098,8 @@ function LaboratorioPage() {
         open={showLaboratories}
         onOpenChange={setShowLaboratories}
       >
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+          <DialogHeader className="pr-10">
             <DialogTitle>
               Laboratorios externos
             </DialogTitle>
@@ -761,45 +1109,41 @@ function LaboratorioPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute right-4 top-4"
-            title="Cerrar"
-            onClick={() => setShowLaboratories(false)}
-          >
-            <X className="size-4" />
-          </Button>
-
-          <div className="rounded-xl border p-4">
+          <div className="rounded-xl border bg-background/60 p-4">
             <div className="flex gap-3">
-              <Building2 className="mt-1 size-5 text-primary" />
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <Building2 className="size-5" />
+              </div>
 
               <div className="flex-1">
-                <p className="font-semibold">
-                  {demoLaboratory.name}
-                </p>
+                <div className="flex flex-col justify-between gap-2 sm:flex-row">
+                  <div>
+                    <p className="font-semibold">
+                      {laboratory.name}
+                    </p>
 
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Contacto: {demoLaboratory.contact}
-                </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Contacto: {laboratory.contact}
+                    </p>
+                  </div>
 
-                <p className="text-sm text-muted-foreground">
-                  Teléfono: {demoLaboratory.phone}
-                </p>
-
-                <p className="text-sm text-muted-foreground">
-                  Email: {demoLaboratory.email}
-                </p>
-
-                <p className="text-sm text-muted-foreground">
-                  Dirección: {demoLaboratory.address}
-                </p>
-
-                <div className="mt-3">
                   <Badge variant="secondary">
-                    Laboratorio activo
+                    Activo
                   </Badge>
+                </div>
+
+                <div className="mt-3 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
+                  <span>
+                    Teléfono: {laboratory.phone}
+                  </span>
+
+                  <span>
+                    Email: {laboratory.email}
+                  </span>
+
+                  <span className="sm:col-span-2">
+                    Dirección: {laboratory.address}
+                  </span>
                 </div>
               </div>
             </div>
@@ -816,12 +1160,127 @@ function LaboratorioPage() {
       </Dialog>
 
       {/* =====================================================
+          MODAL — AGREGAR / EDITAR LABORATORIO
+      ===================================================== */}
+
+      <Dialog
+        open={showLaboratoryForm}
+        onOpenChange={setShowLaboratoryForm}
+      >
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>
+              {laboratoryEditing
+                ? "Editar laboratorio"
+                : "Agregar laboratorio"}
+            </DialogTitle>
+            <DialogDescription>
+              {laboratoryEditing
+                ? "Actualizá los datos del laboratorio externo."
+                : "Registrá un nuevo laboratorio externo para asignar pedidos."}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5 sm:col-span-2">
+              <Label>Nombre del laboratorio *</Label>
+              <Input
+                value={laboratoryForm.name}
+                onChange={(e) =>
+                  setLaboratoryForm((prev) => ({ ...prev, name: e.target.value }))
+                }
+                placeholder="Laboratorio Dental Premium"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label>Contacto *</Label>
+              <Input
+                value={laboratoryForm.contact}
+                onChange={(e) =>
+                  setLaboratoryForm((prev) => ({ ...prev, contact: e.target.value }))
+                }
+                placeholder="Carlos Rodríguez"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label>Teléfono</Label>
+              <Input
+                value={laboratoryForm.phone}
+                onChange={(e) =>
+                  setLaboratoryForm((prev) => ({ ...prev, phone: e.target.value }))
+                }
+                placeholder="11 4444-8899"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label>Correo electrónico</Label>
+              <Input
+                type="email"
+                value={laboratoryForm.email}
+                onChange={(e) =>
+                  setLaboratoryForm((prev) => ({ ...prev, email: e.target.value }))
+                }
+                placeholder="contacto@laboratorio.com"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label>Estado</Label>
+              <Select
+                value={laboratoryForm.status}
+                onValueChange={(value) =>
+                  setLaboratoryForm((prev) => ({ ...prev, status: value }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Activo">Activo</SelectItem>
+                  <SelectItem value="Inactivo">Inactivo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1.5 sm:col-span-2">
+              <Label>Dirección</Label>
+              <Input
+                value={laboratoryForm.address}
+                onChange={(e) =>
+                  setLaboratoryForm((prev) => ({ ...prev, address: e.target.value }))
+                }
+                placeholder="Av. Corrientes 2450, CABA"
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowLaboratoryForm(false)}
+            >
+              Cancelar
+            </Button>
+            <Button onClick={saveLaboratory}>
+              {laboratoryEditing ? "Guardar cambios" : "Agregar laboratorio"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* =====================================================
           MODAL — AUDITORÍA
       ===================================================== */}
 
-      <Dialog open={showAudit} onOpenChange={setShowAudit}>
-        <DialogContent className="max-w-3xl">
-          <DialogHeader>
+      <Dialog
+        open={showAudit}
+        onOpenChange={setShowAudit}
+      >
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
+          <DialogHeader className="pr-10">
             <DialogTitle>
               Auditoría — Laboratorio
             </DialogTitle>
@@ -845,12 +1304,14 @@ function LaboratorioPage() {
             {auditEntries.map((entry, index) => (
               <div
                 key={index}
-                className="rounded-xl border p-4"
+                className="rounded-xl border bg-background/60 p-4"
               >
                 <div className="flex gap-3">
-                  <ShieldCheck className="mt-0.5 size-5 text-primary" />
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <ShieldCheck className="size-5" />
+                  </div>
 
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="font-medium">
                       {entry.action}
                     </p>
@@ -903,18 +1364,44 @@ function Info({
   icon?: typeof User;
 }) {
   return (
-    <div className="rounded-xl border p-3">
+    <div className="rounded-xl border bg-background/50 p-3">
       <p className="text-xs text-muted-foreground">
         {label}
       </p>
 
       <div className="mt-1 flex items-center gap-2">
         {Icon ? (
-          <Icon className="size-4 text-primary" />
+          <Icon className="size-4 shrink-0 text-primary" />
         ) : null}
 
         <p className="text-sm font-medium">
           {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function DocumentItem({
+  name,
+  type,
+}: {
+  name: string;
+  type: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-xl border bg-muted/20 p-3">
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <FileText className="size-4" />
+      </div>
+
+      <div className="min-w-0">
+        <p className="truncate text-sm font-medium">
+          {name}
+        </p>
+
+        <p className="text-xs text-muted-foreground">
+          {type}
         </p>
       </div>
     </div>
@@ -936,7 +1423,9 @@ function TimelineItem({
     <div className="flex gap-4">
       <div
         className={`mt-1 flex size-8 shrink-0 items-center justify-center rounded-full border ${
-          done ? "border-primary bg-primary/10" : "border-border"
+          done
+            ? "border-primary bg-primary/10"
+            : "border-border"
         }`}
       >
         {done ? (
