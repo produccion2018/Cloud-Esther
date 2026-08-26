@@ -106,19 +106,29 @@ function EquipoPage() {
                     Vacaciones, nómina, contratos y capacitación del equipo.
                   </p>
                 </div>
-                <EmptyState
-                  icon={Briefcase}
-                  title="Todavía no cargaste empleados"
-                  description="Agregá los legajos de tu equipo para gestionar vacaciones, nómina y contratos desde acá."
-                  action={
-                    <Button
-                      className="gap-1.5"
-                      onClick={() => toast.info("Formulario de alta de empleado")}
-                    >
-                      <Plus className="size-4" /> Agregar empleado
-                    </Button>
-                  }
-                />
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary">Módulo disponible</Badge>
+                    <p className="text-xs text-muted-foreground">
+                      Gestión de empleados, legajos, documentación, vacaciones, licencias y nómina.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-primary/15 bg-background/60 p-6">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="font-semibold">Abrir Recursos humanos</p>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          Accedé al módulo completo para cargar empleados y administrar sus documentos.
+                        </p>
+                      </div>
+                      <Button asChild className="shrink-0 gap-1.5">
+                        <Link to="/app/recursos-humanos">
+                          <Briefcase className="size-4" /> Abrir módulo
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ) : (
