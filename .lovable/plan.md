@@ -1,32 +1,33 @@
 # Plan
 
 ## Objetivo
-Implementar dos módulos frontend completos dentro del panel actual de Cloud Esther, respetando la navegación, el sidebar, los colores semánticos existentes y el estilo visual de la aplicación.
+Integrar dos módulos frontend completos en Cloud Esther sin cambiar el diseño general, el menú lateral ni la navegación existente.
 
 ## IA Esther
-- Reemplazar la pantalla actual de IA Esther por una experiencia conversacional odontológica completa.
-- Mantener el `PageHeader` existente y agregar el estado “Esther está disponible”.
-- Crear un panel de conversación con avatar de Esther, mensajes, input, adjuntar, enviar, limpiar y estado “Esther está analizando...”.
-- Agregar consultas rápidas especializadas que generen respuestas demo con métricas, listas, alertas y recomendaciones.
-- Agregar un panel “Contexto clínico” con paciente seleccionado, alertas, evoluciones recientes y acciones “Ver historia clínica” / “Analizar paciente”.
-- Separar tipos, datos mock y lógica demo en archivos reutilizables para poder conectar IA, pacientes, historia clínica y módulos reales después.
+- Reemplazar la pantalla actual por una experiencia conversacional odontológica profesional.
+- Mantener el encabezado del módulo con título, descripción e indicador “Esther está disponible”.
+- Usar componentes base de chat para conversación, mensajes, carga y campo de escritura.
+- Agregar avatar/identidad de Esther, mensajes demo, preguntas sugeridas, adjuntar información, limpiar conversación y estado “Esther está analizando...”.
+- Crear respuestas demo clínicas/administrativas con métricas, alertas y recomendaciones, sin diagnósticos médicos automáticos.
+- Incluir panel “Contexto clínico” con paciente demo, alertas, evolución reciente y acciones “Ver historia clínica” y “Analizar paciente”.
+- Separar tipos, datos mock y servicios simulados para poder reemplazarlos luego por backend, IA real, agenda, pacientes, documentos e historia clínica.
 
 ## Odontograma 3D
-- Crear una pantalla de módulo “Odontograma 3D” integrada al panel existente, sin crear sidebar ni cambiar navegación global.
-- Usar React Three Fiber ya instalado para mostrar arcada superior e inferior, dientes FDI individuales, volumen, separación, labels y estados visuales.
-- Permitir seleccionar piezas, hover, resaltado, rotación, zoom, paneo y controles de vista.
-- Crear panel del diente con estado, superficies, diagnóstico, tratamiento, observaciones y acciones.
-- Agregar tabs de Odontograma, Historial, Tratamientos, Evoluciones y Observaciones.
-- Crear modal “Nueva evolución clínica” con campos solicitados; al guardar, actualizar el odontograma, agregar historial mock y mostrar confirmación.
-- Agregar leyenda compacta con estados odontológicos usando color, icono/etiqueta/patrón para no depender solo del color.
+- Expandir el odontograma existente con dentición 3D interactiva, selección de piezas, hover, resaltado y numeración FDI.
+- Agregar controles de vista: zoom, rotación, centrar, vista frontal, vista superior y restablecer.
+- Soportar estados odontológicos: sano, caries, restauración, corona, implante, ausente, extracción indicada, conducto, fractura, prótesis, sellante, puente y observación.
+- Mostrar cada estado con color más indicadores/etiquetas/patrones para no depender solo del color.
+- Crear panel lateral de pieza dental con estado, superficie, diagnóstico, tratamiento, fecha, odontólogo, observaciones y acciones.
+- Agregar tabs: Odontograma, Historial, Tratamientos, Evoluciones y Observaciones.
+- Crear modal “Nueva evolución clínica” con campos solicitados; al guardar, actualizar el mock, el historial y el odontograma visible.
+- Añadir leyenda compacta y línea temporal mock.
 
 ## Integración IA + Odontograma
 - Agregar “Analizar con Esther” desde el odontograma.
-- Al usarlo, abrir la pantalla IA Esther con una consulta prellenada y contexto mock del paciente/odontograma mediante parámetros locales de navegación.
-- La respuesta demo de Esther usará ese contexto conceptual sin llamar APIs reales.
+- Abrir IA Esther con contexto demo del paciente/odontograma y precargar la consulta “Analiza el estado odontológico de este paciente.”.
 
-## Detalles técnicos
-- No se implementará backend, base de datos, endpoints reales ni claves.
-- Se crearán tipos TypeScript y servicios mock separados para conversación, análisis clínico y odontograma.
-- Se mantendrán las variables semánticas existentes (`bg-primary`, `bg-card`, `text-foreground`, etc.) y se evitarán colores hardcodeados en UI.
-- Se agregará metadata propia en rutas nuevas o modificadas según corresponda.
+## Alcance técnico
+- Solo frontend y datos mock/locales; no claves, endpoints reales, base de datos ni backend.
+- Mantener los tokens visuales existentes, light/dark mode y responsive desktop/tablet/mobile.
+- No tocar sidebar, header global, login, dashboard ni configuración global.
+- Verificar con typecheck y una revisión visual del flujo principal.
